@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import './App.css'
-import Footer from './footer.jsx'
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-function App() {
-  
-
+export default function App() {
   return (
-   <div>
-      <Footer/>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow"></main>
+      <Footer />
     </div>
-  )
+  );
 }
-
-export default App
