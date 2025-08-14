@@ -4,7 +4,7 @@ import logo from "/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-themeGreen text-themeCream px-12 py-6 flex flex-col items-center gap-16 w-full fixed bottom-0 left-0">
+    <footer className="bg-themeGreen text-themeCream px-12 py-6 flex flex-col items-center gap-16 w-full">
       {/* Top Section */}
       <div className="flex justify-between items-start w-full">
         {/* Brand */}
