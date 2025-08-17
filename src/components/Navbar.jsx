@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
   return (
     <nav className="bg-themeGreen text-themeCream shadow-md">
@@ -15,19 +17,25 @@ export default function Navbar() {
 
           {/* Links */}
           <div className="hidden md:flex items-center gap-8 ">
-            <span className="font-bold">Home</span>
+            <Link to={"/"}>
+              <span className="font-bold">Home</span>
+            </Link>
             <span className="font-bold">Lost Items</span>
             <span className="font-bold">Found Items</span>
             <span className="font-bold">Contact Us</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="px-6 py-2 rounded-full text-themeGreen bg-themeCream  ">
-              Login
-            </span>
-            <span className="px-4 py-2 rounded-full text-themeGreen bg-themeCream">
-              Sign Up
-            </span>
+            <Link to={"/Login"}>
+              <span className="px-6 py-2 rounded-full text-themeGreen bg-themeCream  ">
+                Login
+              </span>
+            </Link>
+            <Link to={"/Signup"}>
+              <span className="px-4 py-2 rounded-full text-themeGreen bg-themeCream">
+                Sign Up
+              </span>
+            </Link>
           </div>
         </div>
       </div>

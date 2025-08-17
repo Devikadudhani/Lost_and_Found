@@ -24,10 +24,10 @@ function Hero() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-white">
+            <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
               Report Lost Item
             </button>
-            <button className="px-4 py-2 rounded-md text-themeGreen font-semibold bg-white">
+            <button className="px-4 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
               Report Found Item
             </button>
           </div>

@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         themeGreen: "#135106",
-        themeCream: "#fdf5e6",
+        themeCream: "#FFFFE9",
       },
       fontFamily: {},
     },
