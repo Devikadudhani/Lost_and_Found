@@ -23,18 +23,18 @@ export default function Navbar() {
             <span className="font-bold">Lost Items</span>
             <span className="font-bold">Found Items</span>
             <Link to={"/About"}>
-            <span className="font-bold">About Us</span>
+              <span className="font-bold">About Us</span>
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
             <Link to={"/Login"}>
-              <span className="px-6 py-2 rounded-full text-themeGreen bg-themeCream  ">
+              <span className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream  ">
                 Login
               </span>
             </Link>
             <Link to={"/Signup"}>
-              <span className="px-4 py-2 rounded-full text-themeGreen bg-themeCream">
+              <span className="px-4 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
                 Sign Up
               </span>
             </Link>

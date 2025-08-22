@@ -7,7 +7,9 @@ export default {
         themeGreen: "#135106",
         themeCream: "#FFFFE9",
       },
-      fontFamily: {},
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [],
