@@ -16,6 +16,11 @@ function HowToUse() {
           alt="Key Features Illustration"
           className="w-full max-w-md object-contain"
         />
+        <img
+          src="/flow.jpg"
+          alt="Key Features Illustration"
+          className="w-full max-w-md object-contain"
+        />
       </div>
     </div>
   );
