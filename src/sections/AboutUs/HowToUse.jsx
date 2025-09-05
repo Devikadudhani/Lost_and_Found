@@ -2,7 +2,7 @@ import React from "react";
 
 function HowToUse() {
   return (
-    <div className="flex flex-col items-center font-poppins mt-8 ">
+    <div className="flex flex-col items-center mt-8 ">
       <div className="flex flex-col items-center mb-10">
         <h4 className="mb-2 text-themeGreen text-md font-medium">
           Navigate with ease

@@ -2,7 +2,7 @@ import React from "react";
 
 function Team() {
   return (
-    <div className="py-2 flex font-poppins items-center mb-8 justify-center">
+    <div className="py-2 flex items-center mb-8 justify-center">
       <div className="flex w-[900px] rounded-3xl overflow-hidden">
         <div className="flex-1 p-10">
           <div className="flex flex-col items-center mb-10">

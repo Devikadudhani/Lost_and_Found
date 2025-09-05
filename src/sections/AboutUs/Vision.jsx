@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Vision() {
   return (
-    <div className="mt-6 flex items-center justify-center gap-16 px-64 py-16 font-poppins">
+    <div className="mt-6 flex items-center justify-center gap-16 px-64 py-16 ">
       {/* Image */}
       <div className="flex-shrink-0">
         <img

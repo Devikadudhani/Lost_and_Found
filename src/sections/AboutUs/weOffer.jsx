@@ -2,7 +2,7 @@
 
 export default function WeOffer() {
   return (
-    <section className="flex items-center justify-center font-poppins ">
+    <section className="flex items-center justify-center  ">
       <div className="w-full max-w-6xl p-10">
         {/* Heading */}
         <div className="flex flex-col items-center mb-10">
