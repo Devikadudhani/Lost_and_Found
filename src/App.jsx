@@ -6,7 +6,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
+
 import Lost from "./pages/Lost";
+
 
 export default function App() {
   return (

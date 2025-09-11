@@ -1,119 +1,61 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/axios";
 
 function Signup() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    enrollmentNo: "",
-    OTP: "",
-  });
-
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({ name: "", enrollment: "", email: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(String(email).toLowerCase());
-  };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basic validation checks
-    if (!validateEmail(formData.email)) {
-      setError("Invalid email format");
-      return;
+    try {
+      const res = await api.post("/auth/signup", formData);
+      if (res.data.message) {
+        alert("OTP sent to email!");
+        navigate("/verify-otp", { state: { email: formData.email, type: "signup" } });
+      }
+    } catch (err) {
+      alert(err.response?.data?.error || "Signup failed");
     }
-    if (formData.enrollmentNo.length < 14) {
-      setError("Enrollment number must be at least 14 characters");
-      return;
-    };
-    // If all validations pass, reset the form and error
-    setError("");
-    alert("SignUp completed succesfully !");
   };
 
   return (
     <div className="my-20 flex items-center justify-center">
-      {/* Common Card */}
       <div className="flex w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
-        {/* Left: Login Form */}
         <div className="flex-1 p-10">
-          <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">
-            Sign Up
-          </h1>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-sm font-medium mb-1">
-                Name
-              </label>
-              <input
-                type="name"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your name"
-                required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="enrollmentNo"
-                className="text-sm font-medium mb-1"
-              >
-                Enrollment Number
-              </label>
-              <input
-                type="enrollmentNo"
-                id="enrollmentNo"
-                name="enrollmentNo"
-                value={formData.enrollmentNo}
-                onChange={handleChange}
-                placeholder="Enter your Enrollment Number"
-                required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="email" className="text-sm font-medium mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="OTP" className="text-sm font-medium mb-1">
-                Verification Code
-              </label>
-              <input
-                type="OTP"
-                id="OTP"
-                name="OTP"
-                value={formData.OTP}
-                onChange={handleChange}
-                placeholder="Enter the verification code sent on email"
-                required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-
-            {error && <div className="mt-4 text-red-500 text-sm">{error}</div>}
+          <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">Sign Up</h1>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="text"
+              name="enrollment"
+              placeholder="Enrollment Number"
+              value={formData.enrollment}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="IGDTUW Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
             <button
               type="submit"
               className="w-full bg-themeGreen text-themeCream font-semibold py-[10px] rounded-lg shadow-md"
@@ -121,15 +63,6 @@ function Signup() {
               Sign Up
             </button>
           </form>
-        </div>
-
-        {/* Right: Logo */}
-        <div className="flex-1 flex items-center justify-center p-10">
-          <img
-            src="/logoWithname.png"
-            alt="Logo"
-            className="max-w-[250px] object-contain"
-          />
         </div>
       </div>
     </div>

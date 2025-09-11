@@ -1,41 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/axios";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await api.post("/auth/login", { email });
+
+      if (res.data.message) {
+        alert("OTP sent to email!");
+        // Navigate to OTP verification page with email and type
+        navigate("/verify-otp", { state: { email, type: "login" } });
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || "Login failed");
+    }
+  };
+
   return (
     <div className="my-20 flex items-center justify-center">
-      {/* Common Card */}
       <div className="flex w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
-        {/* Left: Login Form */}
         <div className="flex-1 p-10">
-          <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">
-            Login
-          </h1>
-
-          <form className="space-y-5">
-            <div className="flex flex-col">
-              <label htmlFor="email" className="text-sm font-medium mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-            {/*id is 'OTP' for verification code */}
-            <div className="flex flex-col">
-              <label htmlFor="OTP" className="text-sm font-medium mb-1">
-                Verification Code
-              </label>
-              <input
-                type="OTP"
-                id="OTP"
-                placeholder="Enter verification code"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              />
-            </div>
-
+          <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">Login</h1>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <input
+              type="email"
+              placeholder="IGDTUW Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            {error && <div className="text-red-500 text-sm">{error}</div>}
             <button
               type="submit"
               className="w-full bg-themeGreen text-themeCream font-semibold py-[10px] rounded-lg shadow-md"
@@ -43,25 +46,6 @@ function Login() {
               Login
             </button>
           </form>
-
-          <p className="text-sm text-center mt-5">
-            Don't have an account?{" "}
-            <a
-              href="/signup"
-              className="text-themeGreen font-medium hover:underline"
-            >
-              Sign up
-            </a>
-          </p>
-        </div>
-
-        {/* Right: Logo */}
-        <div className="flex-1 flex items-center justify-center p-10">
-          <img
-            src="/logoWithname.png"
-            alt="Logo"
-            className="max-w-[250px] object-contain"
-          />
         </div>
       </div>
     </div>
