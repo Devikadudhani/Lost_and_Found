@@ -20,7 +20,7 @@ export default function Navbar() {
             <Link to={"/"}>
               <span className="font-bold">Home</span>
             </Link>
-            <span className="font-bold">Lost Items</span>
+            <Link to={"/Lost"}><span className="font-bold">Lost Items</span></Link>
             <span className="font-bold">Found Items</span>
             <Link to={"/About"}>
               <span className="font-bold">About Us</span>

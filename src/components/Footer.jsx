@@ -1,6 +1,7 @@
 import React from "react";
 // import logo from "/logo.png";
 import logo from "/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -28,9 +29,8 @@ const Footer = () => {
         <div className="flex gap-12">
           <div className="flex flex-col ">
             <h5 className="font-bold mb-2">Report</h5>
-            <a href="/" className="hover:underline">
-              Lost
-            </a>
+            <Link to="/Lost" className="hover:underline">
+            </Link>
             <a href="/" className="hover:underline">
               Found
             </a>
