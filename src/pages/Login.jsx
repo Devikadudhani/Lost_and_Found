@@ -4,6 +4,7 @@ import api from "../utils/axios";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const[otp,setOtp]=useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -35,6 +36,14 @@ function Login() {
               placeholder="IGDTUW Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="text"
+              placeholder="Enter the OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               required
               className="w-full rounded-lg border px-3 py-2"
             />

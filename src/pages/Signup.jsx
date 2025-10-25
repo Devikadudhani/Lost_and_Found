@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../utils/axios";
 
 function Signup() {
-  const [formData, setFormData] = useState({ name: "", enrollment: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", enrollment: "", email: "" , otp:""});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -52,6 +52,15 @@ function Signup() {
               name="email"
               placeholder="IGDTUW Email"
               value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="text"
+              name="otp"
+              placeholder="Enter the OTP"
+              value={formData.otp}
               onChange={handleChange}
               required
               className="w-full rounded-lg border px-3 py-2"
