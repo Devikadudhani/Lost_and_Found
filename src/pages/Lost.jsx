@@ -8,7 +8,7 @@ function RequiredLabel({ htmlFor, children }) {
   );
 }
 
-function Lost() {
+function ReportLost() {
   const [image, setImage] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -120,4 +120,4 @@ function Lost() {
   );
 }
 
-export default Lost;
+export default RequiredLost;

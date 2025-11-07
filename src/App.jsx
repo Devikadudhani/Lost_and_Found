@@ -7,8 +7,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
-import Lost from "./pages/Lost";
-import Found from "./pages/Found";
+import ReportLost from "./pages/Lost";
+import ReportFound from "./pages/Found";
 
 
 export default function App() {
@@ -22,8 +22,8 @@ export default function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path = "/About" element={<About />} />
-          <Route path = "/Lost" element={<Lost />} />
-          <Route path = "/Found" element={<Found />} />
+          <Route path = "/Lost" element={<ReportLost />} />
+          <Route path = "/Found" element={<ReportFound />} />
           <Route path="/dashboard"
               element={
                 isAuthenticated ? <Dashboard /> : <Navigate to="/login" />

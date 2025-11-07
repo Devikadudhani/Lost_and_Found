@@ -7,7 +7,7 @@ function RequiredLabel({ htmlFor, children }) {
     </label>
   );
 }
-function Found() {
+function ReportFound() {
   const [image, setImage] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -121,4 +121,4 @@ function Found() {
   );
 }
 
-export default Found;
+export default ReportFound;
