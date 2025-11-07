@@ -43,7 +43,7 @@ function Login() {
         localStorage.setItem("token", res.data.token);
         if (res.data.user) localStorage.setItem("user", JSON.stringify(res.data.user));
         alert("OTP verified! Login successful.");
-        navigate("/");
+        navigate("/dashboard");
       } else if (res.data.message) {
         // Generic success message (e.g. signup verification flow)
         alert(res.data.message);
@@ -54,23 +54,6 @@ function Login() {
     }
   };
   const handleSubmit = otpSent ? handleVerifyOtpAndLogin : handleSendOtp;
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-
-  //   try {
-  //     const res = await api.post("/auth/login", { email });
-
-  //     if (res.data.message) {
-  //       alert("OTP sent to email!");
-  //       // Navigate to OTP verification page with email and type
-  //       navigate("/verify-otp", { state: { email, type: "login" } });
-  //     }
-  //   } catch (err) {
-  //     setError(err.response?.data?.error || "Login failed");
-  //   }
-  // };
 
   return (
     <div className="my-20 flex items-center justify-center">
