@@ -120,4 +120,4 @@ function ReportLost() {
   );
 }
 
-export default RequiredLost;
+export default ReportLost;

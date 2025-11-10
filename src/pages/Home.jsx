@@ -6,7 +6,6 @@ function Home() {
   return (
     <div className="pt-4">
       <Hero />
-      <RecentGallery />
     </div>
   );
 }
