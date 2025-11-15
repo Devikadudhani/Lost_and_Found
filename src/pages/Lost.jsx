@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/axios";
+
 function RequiredLabel({ htmlFor, children }) {
   return (
     <label htmlFor={htmlFor} className="block font-medium">
@@ -9,11 +12,78 @@ function RequiredLabel({ htmlFor, children }) {
 }
 
 function Lost() {
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    itemName: "",
+    description: "",
+    location: "",
+    pointOfContact: ""
+  });
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImage(URL.createObjectURL(file));
+      setImageFile(file);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // Validate required fields
+      if (!formData.itemName || !formData.description || !formData.location || !formData.pointOfContact) {
+        alert("Please fill in all required fields");
+        setLoading(false);
+        return;
+      }
+
+      // Upload image to a service (e.g., Cloudinary, AWS S3, or your own backend)
+      // For now, we'll use a placeholder. You need to implement image upload
+      let imageUrl = "";
+      if (imageFile) {
+        // TODO: Upload image and get URL
+        imageUrl = URL.createObjectURL(imageFile);
+      }
+
+      const payload = {
+        itemName: formData.itemName,
+        description: formData.description,
+        location: formData.location,
+        pointOfContact: formData.pointOfContact,
+        imageUrl: imageUrl,
+        reportType: "lost"
+      };
+
+      const response = await api.post("/items/report", payload);
+      
+      if (response.status === 201) {
+        alert("Item reported successfully!");
+        // Reset form
+        setFormData({ itemName: "", description: "", location: "", pointOfContact: "" });
+        setImage(null);
+        setImageFile(null);
+        // Redirect to dashboard or items page
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Error reporting item:", error);
+      alert(error.response?.data?.message || "Failed to report item. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -28,14 +98,16 @@ function Lost() {
     {/* Form + Upload Section */}
     <div className="flex gap-10">
       {/* Left: Lost Items Info */}
-      <form className="flex-1 space-y-5">
+      <form className="flex-1 space-y-5" onSubmit={handleSubmit}>
         <div className="flex flex-col">
-          <RequiredLabel htmlFor="itemname" className="text-sm font-medium mb-1">
+          <RequiredLabel htmlFor="itemName" className="text-sm font-medium mb-1">
             Item Name
           </RequiredLabel>
           <input
             type="text"
-            id="itemname"
+            id="itemName"
+            value={formData.itemName}
+            onChange={handleInputChange}
             placeholder="What is the name of the item?"
             className="w-full rounded-lg border border-gray-300 px-3 py-2"
             required
@@ -49,6 +121,8 @@ function Lost() {
           <input
             type="text"
             id="description"
+            value={formData.description}
+            onChange={handleInputChange}
             placeholder="Provide a brief description of the item"
             className="w-full rounded-lg border border-gray-300 px-3 py-2"
             required
@@ -56,38 +130,55 @@ function Lost() {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="location" className="text-sm font-medium mb-1 block text-base">
+          <RequiredLabel htmlFor="location" className="text-sm font-medium mb-1">
             Location
-          </label>
+          </RequiredLabel>
           <input
             type="text"
             id="location"
+            value={formData.location}
+            onChange={handleInputChange}
             placeholder="Where you might lose it??"
             className="w-full rounded-lg border border-gray-300 px-3 py-2"
+            required
           />
         </div>
 
         <div className="flex flex-col">
-          <RequiredLabel htmlFor="POC" className="text-sm font-medium mb-1">
+          <RequiredLabel htmlFor="pointOfContact" className="text-sm font-medium mb-1">
             Point of Contact
           </RequiredLabel>
           <input
             type="text"
-            id="POC"
+            id="pointOfContact"
+            value={formData.pointOfContact}
+            onChange={handleInputChange}
             placeholder="Enter your name or contact info"
             className="w-full rounded-lg border border-gray-300 px-3 py-2"
             required
           />
         </div>
+
+        {/* Submit Button */}
+        <div className="flex justify-center mt-10">
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-8 bg-themeGreen text-themeCream font-semibold py-3 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50"
+          >
+            {loading ? "Reporting..." : "Report"}
+          </button>
+        </div>
       </form>
 
       {/* Right: Upload Image */}
       <div className="flex-1">
-        <label htmlFor="upload" className="text-sm font-medium mb-1 block text-base">
+        <label htmlFor="upload" className="text-sm font-medium mb-1 block">
           Upload the image
         </label>
         <input
           type="file"
+          id="upload"
           accept="image/*"
           onChange={handleImageChange}
           className="mb-4 w-full rounded-lg border border-gray-300 px-3 py-2"
@@ -104,16 +195,6 @@ function Lost() {
           </div>
         )}
       </div>
-    </div>
-
-    {/* Submit Button */}
-    <div className="flex justify-center mt-10">
-      <button
-        type="submit"
-        className="px-8 bg-themeGreen text-themeCream font-semibold py-3 rounded-lg shadow-md"
-      >
-        Report
-      </button>
     </div>
   </div>
 </div>
