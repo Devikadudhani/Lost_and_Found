@@ -9,6 +9,9 @@ import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import ReportLost from "./pages/Lost";
 import ReportFound from "./pages/Found";
+import LostItemsPage from "./pages/LostItemsPage";
+import FoundItemsPage from "./pages/FoundItemsPage";
+
 
 
 export default function App() {
@@ -24,6 +27,8 @@ export default function App() {
           <Route path = "/About" element={<About />} />
           <Route path = "/Lost" element={<ReportLost />} />
           <Route path = "/Found" element={<ReportFound />} />
+          <Route path="/lost-items" element={<LostItemsPage />} />
+          <Route path="/found-items" element={<FoundItemsPage />} />
           <Route path="/dashboard"
               element={
                 isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
