@@ -3,66 +3,110 @@ import { useNavigate } from "react-router-dom";
 import api from "../utils/axios";
 
 function Signup() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    enrollment: "",
+    email: "",
+    otp: "",
+  });
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleotpSent = async (e) => {
     e.preventDefault();
-    setError("");
-
+    const { name, enrollment, email } = formData;
+    if (!name || !enrollment || !email) {
+      alert("Please fill all the fields");
+      return;
+    }
     try {
-      const res = await api.post("/auth/signup", { email });
-
+      res = await api.post("/auth/send-otp", { name, enrollment, email });
       if (res.data.message) {
-        alert("Signup successful! Please login using OTP.");
-        navigate("/login");
+        alert("OTP sent to email!");
+        setOtpSent(true);
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed");
+      alert(err.response?.data?.error || "Error sending OTP");
     }
   };
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post("/auth/verify-otp", { ...formData });
+      if (res.data.message) {
+        alert("OTP verified! Signup successful.");
+        navigate("/login");
+      } else {
+        alert("Invalid OTP. Please try again.");
+      }
+    } catch (err) {
+      alert(err.response?.data?.error || "OTP verification failed");
+    }
+  };
+
+  //
+  const handleSubmit = otpSent ? handleVerifyOtp : handleotpSent;
 
   return (
     <div className="my-20 flex items-center justify-center">
       <div className="flex w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
-        <div className="flex-1 p-10 flex flex-col justify-center">
+        <div className="flex-1 p-10">
           <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">
             Sign Up
           </h1>
-
-          <form onSubmit={handleSignup} className="space-y-5">
-            <div className="flex flex-col">
-              <label className="text-sm font-medium mb-1">Email</label>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              disabled={otpSent}
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="text"
+              name="enrollment"
+              placeholder="Enrollment Number"
+              value={formData.enrollment}
+              onChange={handleChange}
+              required
+              disabled={otpSent}
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="IGDTUW Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              disabled={otpSent}
+              className="w-full rounded-lg border px-3 py-2"
+            />
+            {otpSent && (
               <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                name="otp"
+                placeholder="Enter the OTP"
+                value={formData.otp}
+                onChange={handleChange}
                 required
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                className="w-full rounded-lg border px-3 py-2"
               />
-            </div>
-
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-
+            )}
             <button
               type="submit"
               className="w-full bg-themeGreen text-themeCream font-semibold py-[10px] rounded-lg shadow-md"
             >
-              Sign Up
+              {otpSent ? "Verify OTP" : "Send OTP"}
             </button>
           </form>
-
-          <p className="text-sm text-center mt-5">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-themeGreen font-medium hover:underline"
-            >
-              Login
-            </a>
-          </p>
         </div>
 
         <div className="flex-1 flex items-center justify-center p-10">
