@@ -24,7 +24,7 @@ function Signup() {
       return;
     }
     try {
-      res = await api.post("/auth/send-otp", { name, enrollment, email });
+      const res = await api.post("/auth/send-otp", { name, enrollment, email });
       if (res.data.message) {
         alert("OTP sent to email!");
         setOtpSent(true);
