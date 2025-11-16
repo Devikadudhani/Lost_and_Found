@@ -40,10 +40,10 @@ export default function Navbar() {
             <Link to={user ? "/dashboard" : "/"}>
               <span className="font-bold">{user ? "Dashboard" : "Home"}</span>
             </Link>
-            <Link to={"/Lost"}>
+            <Link to={"/lost-items" }>
               <span className="font-bold">Lost Items</span>
             </Link>
-            <Link to="/Found">
+            <Link to="/found-items" >
               <span className="font-bold">Found Items</span>
             </Link>
             <Link to={"/About"}>
