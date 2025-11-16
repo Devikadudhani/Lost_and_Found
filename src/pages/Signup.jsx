@@ -3,116 +3,93 @@ import { useNavigate } from "react-router-dom";
 import api from "../utils/axios";
 
 function Signup() {
-  const [formData, setFormData] = useState({
-    name: "",
-    enrollment: "",
-    email: "",
-    otp: "",
-  });
-  const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleotpSent = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const { name, enrollment, email } = formData;
-    if (!name || !enrollment || !email) {
-      alert("Please fill all the fields");
-      return;
-    }
+    setError("");
     try {
-      const res = await api.post("/auth/send-otp", { name, enrollment, email });
+      const res = await api.post("/auth/signup", { email, password });
       if (res.data.message) {
-        alert("OTP sent to email!");
-        setOtpSent(true);
-      }
-    } catch (err) {
-      alert(err.response?.data?.error || "Error sending OTP");
-    }
-  };
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await api.post("/auth/verify-otp", { ...formData });
-      // If backend returns a token (auto-login), persist it
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-        if (res.data.user) localStorage.setItem("user", JSON.stringify(res.data.user));
-        alert("Signup complete — logged in.");
-        navigate("/");
-      } else if (res.data.message) {
-        alert("OTP verified! Signup successful.");
+        alert("Signup successful!");
         navigate("/login");
-      } else {
-        alert("Invalid OTP. Please try again.");
       }
     } catch (err) {
-      alert(err.response?.data?.error || "OTP verification failed");
+      setError(err.response?.data?.error || "Signup failed");
     }
   };
-
-  //
-  const handleSubmit = otpSent ? handleVerifyOtp : handleotpSent;
 
   return (
     <div className="my-20 flex items-center justify-center">
       <div className="flex w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
-        <div className="flex-1 p-10">
+        {/* Left: Signup Form */}
+        <div className="flex-1 p-10 flex flex-col justify-center">
           <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">
             Sign Up
           </h1>
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              disabled={otpSent}
-              className="w-full rounded-lg border px-3 py-2"
-            />
-            <input
-              type="text"
-              name="enrollment"
-              placeholder="Enrollment Number"
-              value={formData.enrollment}
-              onChange={handleChange}
-              required
-              disabled={otpSent}
-              className="w-full rounded-lg border px-3 py-2"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="IGDTUW Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              disabled={otpSent}
-              className="w-full rounded-lg border px-3 py-2"
-            />
-            {otpSent && (
+
+          <form onSubmit={handleSignup} className="space-y-5">
+            <div className="flex flex-col">
+              <label htmlFor="email" className="text-sm font-medium mb-1">
+                Email
+              </label>
               <input
-                type="text"
-                name="otp"
-                placeholder="Enter the OTP"
-                value={formData.otp}
-                onChange={handleChange}
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-lg border px-3 py-2"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2"
               />
-            )}
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="password" className="text-sm font-medium mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+              />
+            </div>
+
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+
             <button
               type="submit"
               className="w-full bg-themeGreen text-themeCream font-semibold py-[10px] rounded-lg shadow-md"
             >
-              {otpSent ? "Verify OTP" : "Send OTP"}
+              Sign Up
             </button>
           </form>
+
+          <p className="text-sm text-center mt-5">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-themeGreen font-medium hover:underline"
+            >
+              Login
+            </a>
+          </p>
+        </div>
+
+        {/* Right: Logo */}
+        <div className="flex-1 flex items-center justify-center p-10">
+          <img
+            src="/logoWithname.png"
+            alt="Logo"
+            className="max-w-[250px] object-contain"
+          />
         </div>
       </div>
     </div>

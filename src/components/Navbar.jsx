@@ -1,6 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
 
 export default function Navbar() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/login");
+  };
   return (
     <nav className="bg-themeGreen text-themeCream shadow-md">
       <div className="max-w-7xl py-2 px-2 mx-auto ">
@@ -8,21 +24,21 @@ export default function Navbar() {
           {/* Brand */}
           <div className="flex items-center gap-3">
             <Link to={"/"}>
-            <img
-              src="/logo.png"
-              alt="IGDTUW Lost & Found Logo"
-              className="w-12 h-12 rounded-full object-cover"
-            />
+              <img
+                src="/logo.png"
+                alt="IGDTUW Lost & Found Logo"
+                className="w-12 h-12 rounded-full object-cover"
+              />
             </Link>
             <Link to="/">
-            <span className="font-bold text-xl">Lost and Found</span>
+              <span className="font-bold text-xl">Lost and Found</span>
             </Link>
           </div>
 
           {/* Links */}
           <div className="hidden md:flex items-center gap-8 ">
-            <Link to={"/"}>
-              <span className="font-bold">Home</span>
+            <Link to={user ? "/dashboard" : "/"}>
+              <span className="font-bold">{user ? "Dashboard" : "Home"}</span>
             </Link>
             <Link to={"/Lost"}>
               <span className="font-bold">Lost Items</span>
@@ -34,18 +50,36 @@ export default function Navbar() {
               <span className="font-bold">About Us</span>
             </Link>
           </div>
-
+{/* Right Section */}
           <div className="flex items-center gap-4">
-            <Link to={"/Login"}>
-              <span className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream  ">
-                Login
-              </span>
-            </Link>
-            <Link to={"/Signup"}>
-              <span className="px-4 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
-                Sign Up
-              </span>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/dashboard">
+                  <span className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
+                    Hey, {user.name?.split(" ")[0] || "User"} 👋
+                  </span>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/Login">
+                  <span className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
+                    Login
+                  </span>
+                </Link>
+                <Link to="/Signup">
+                  <span className="px-4 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
+                    Sign Up
+                  </span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

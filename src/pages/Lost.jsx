@@ -11,7 +11,7 @@ function RequiredLabel({ htmlFor, children }) {
   );
 }
 
-function Lost() {
+function ReportLost() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -201,4 +201,4 @@ function Lost() {
   );
 }
 
-export default Lost;
+export default ReportLost;

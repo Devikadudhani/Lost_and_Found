@@ -10,8 +10,7 @@ function RequiredLabel({ htmlFor, children }) {
     </label>
   );
 }
-
-function Found() {
+function ReportFound() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -202,4 +201,4 @@ function Found() {
   );
 }
 
-export default Found;
+export default ReportFound;

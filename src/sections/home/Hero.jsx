@@ -4,14 +4,14 @@ import WeOffer from "../AboutUs/weOffer";
 
 function Hero() {
   return (
-    <div className="my-6 flex justify-center px-4">
-      <div className="flex flex-col items-center gap-8">
-        <div className="relative w-full max-w-[1000px]">
+     <section className="flex justify-center px-4 my-8 animate-fadeIn">
+      <div className="flex flex-col items-center gap-8 w-full max-w-[1000px]">
+        <div className="relative w-full ">
           {/* Image */}
           <img
             src="/image.png"
             alt="IGDTUW"
-            className="w-full h-auto object-contain rounded-md"
+            className="w-full h-auto object-contain rounded-md shadow-md"
           />
 
           {/* Overlay */}
@@ -42,7 +42,7 @@ function Hero() {
         </div>
         <WeOffer />
       </div>
-    </div>
+    </section>
   );
 }
 
