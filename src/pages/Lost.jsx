@@ -31,6 +31,15 @@ function ReportLost() {
     }
   };
 
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({
@@ -51,12 +60,10 @@ function ReportLost() {
         return;
       }
 
-      // Upload image to a service (e.g., Cloudinary, AWS S3, or your own backend)
-      // For now, we'll use a placeholder. You need to implement image upload
+      // Convert image to base64 if present
       let imageUrl = "";
       if (imageFile) {
-        // TODO: Upload image and get URL
-        imageUrl = URL.createObjectURL(imageFile);
+        imageUrl = await fileToBase64(imageFile);
       }
 
       const payload = {
