@@ -8,7 +8,7 @@ const otp = process.argv[3] || Math.floor(100000 + Math.random() * 900000).toStr
 
 (async () => {
   console.log('Sending OTP', otp, 'to', email);
-  const ok = await sendOtp(email, otp);
-  console.log('sendOtp returned:', ok);
-  process.exit(ok ? 0 : 1);
+  const res = await sendOtp(email, otp);
+  console.log('sendOtp returned:', res);
+  process.exit(res && res.success ? 0 : 1);
 })();

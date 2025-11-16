@@ -63,20 +63,23 @@ const sendOtp = async (email, otp) => {
   };
 
   if (!tr) {
-    console.warn("Email transporter not configured — skipping sending OTP. OTP:", otp);
-    return false;
+    const msg = "Email transporter not configured — skipping sending OTP.";
+    console.warn(msg, "OTP:", otp);
+    return { success: false, error: msg };
   }
 
   try {
     const info = await tr.sendMail(mailOptions);
+    let preview;
     if (usingTestAccount) {
-      const preview = nodemailer.getTestMessageUrl(info);
+      preview = nodemailer.getTestMessageUrl(info);
       console.info("OTP sent (Ethereal). Preview URL:", preview || "(no preview available)");
     }
-    return true;
+    return { success: true, previewUrl: preview };
   } catch (err) {
-    console.error("Failed to send OTP email:", err && err.message ? err.message : err);
-    return false;
+    const message = err && err.message ? err.message : String(err);
+    console.error("Failed to send OTP email:", message);
+    return { success: false, error: message };
   }
 };
 

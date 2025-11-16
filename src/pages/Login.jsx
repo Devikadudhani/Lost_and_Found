@@ -51,7 +51,8 @@ function Login() {
           localStorage.setItem("user", JSON.stringify(res.data.user));
         }
         alert("OTP verified! Login successful.");
-        navigate("/dashboard");
+        // Redirect to home page after successful login
+        navigate("/");
       }
     } catch (err) {
       setError(err.response?.data?.error || "OTP verification failed");
