@@ -11,7 +11,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-app.use(express.json());
+// Increase body parser limits to accept base64 image payloads from frontend
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use("/api/items", itemRoutes);
 
 connectDB();
