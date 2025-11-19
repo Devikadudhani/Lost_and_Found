@@ -40,7 +40,7 @@ function Team() {
           <div className="flex items-center justify-center gap-10">
             <div className="bg-white flex flex-col items-center text-center p-4 shadow-md">
               <img
-                src="/members/diya.jpg"
+                src="/members/Diya_2.jpg"
                 alt="Diya Kotru"
                 className="w-52 h-52 mb-4 object-cover"
               />
