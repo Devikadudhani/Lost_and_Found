@@ -56,7 +56,7 @@ export default function ItemsList({ fixedType }) {
       const res = await fetch(url, opts);
       if (!res.ok) {
         if (res.status === 401) {
-          alert("Please login to view your posts.");
+          alert("Please login to view.");
         } else {
           console.error("Fetch failed", res.status);
         }

@@ -321,6 +321,27 @@ export default function ItemCard({ item, onChange }) {
                     <div className="text-gray-600 whitespace-pre-wrap">{item.description || "—"}</div>
                   </div>
                 </div>
+                {/* Uploader info */}
+<div className="mt-4 text-sm text-gray-700">
+  <div className="mb-2">
+    <strong>Reported by:</strong>{" "}
+    {item.reportedBy?.name || item.reportedBy?.email || item.reportedBy || "Unknown"}
+  </div>
+
+  {item.reportedBy?.email && (
+    <div className="mb-2">
+      <strong>Email:</strong>{" "}
+      <a
+        href={`mailto:${item.reportedBy.email}`}
+        className="text-themeGreen underline"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {item.reportedBy.email}
+      </a>
+    </div>
+  )}
+</div>
+
 
                 <div className="w-56 shrink-0">
                   {item.imageUrl ? (
