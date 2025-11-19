@@ -99,6 +99,18 @@ router.post("/report", auth, async (req, res) => {
       return res.status(400).json({ message: "Image is required for found items" });
     }
 
+    // If imageUrl is a base64 data URL, validate size and content
+    if (typeof imageUrl === "string" && imageUrl.startsWith("data:")) {
+      // estimate size from base64 length: (4/3)*bytes, so bytes ~= (length * 3) / 4
+      const base64Part = imageUrl.split(",")[1] || "";
+      const approxBytes = Math.floor((base64Part.length * 3) / 4);
+      const maxBytes = 5 * 1024 * 1024; // 5 MB
+      if (approxBytes > maxBytes) {
+        console.warn(`Rejected upload: base64 image too large (${approxBytes} bytes)`);
+        return res.status(413).json({ message: "Image too large. Please upload an image smaller than 5MB or use an external image host." });
+      }
+    }
+
     const newItem = new Item({
       itemName,
       description,
