@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import WeOffer from "../AboutUs/weOffer";
+import { useEffect, useState } from "react";
 
 function Hero() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
   return (
-     <section className="flex justify-center px-4 my-8 animate-fadeIn">
+    <section className="flex justify-center px-4 my-8 animate-fadeIn">
       <div className="flex flex-col items-center gap-8 w-full max-w-[1000px]">
         <div className="relative w-full ">
           {/* Image */}
@@ -27,16 +35,34 @@ function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/Lost">
-                <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+              {user ? (
+                <Link to="/Lost">
+                  <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+                    Report Lost Item
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => alert("Login to report a lost item.")}
+                  className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream"
+                >
                   Report Lost Item
                 </button>
-              </Link>
-              <Link to="/Found">
-                <button className="px-4 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+              )}
+              {user ? (
+                <Link to="/Found">
+                  <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+                    Report Found Item
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => alert("Login to report a found item.")}
+                  className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream"
+                >
                   Report Found Item
                 </button>
-              </Link>
+              )}
             </div>
           </div>
         </div>
