@@ -53,6 +53,7 @@ function Login() {
         alert("OTP verified! Login successful.");
         // Redirect to home page after successful login
         navigate("/");
+        window.location.reload();
       }
     } catch (err) {
       setError(err.response?.data?.error || "OTP verification failed");
