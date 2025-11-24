@@ -8,7 +8,7 @@ function About() {
     <div className="bg-themeCream m-0 p-0">
       <div
         className="relative w-full h-64 flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: "url('/igdtuw.jpg')" }} // replace with your image path
+        style={{ backgroundImage: "url('/igdtuw.jpg')" }}
       >
         {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/65"></div>
