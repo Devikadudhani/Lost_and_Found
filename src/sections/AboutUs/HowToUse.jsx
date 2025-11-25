@@ -12,15 +12,15 @@ function HowToUse() {
         </h2>
         {/* Single Image Below Headings */}
         <img
-          src="/flow.jpg"
+          src="/flow.png"
           alt="Key Features Illustration"
           className="w-full max-w-md object-contain"
         />
-        <img
+        {/* <img
           src="/flow.jpg"
           alt="Key Features Illustration"
           className="w-full max-w-md object-contain"
-        />
+        /> */}
       </div>
     </div>
   );
