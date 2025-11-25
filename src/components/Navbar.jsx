@@ -60,7 +60,7 @@ export default function Navbar() {
                 {/* UPDATED: Profile Button */}
                 <Link to="/profile">
                   <span className="px-6 py-2 rounded-full font-semibold text-themeGreen bg-themeCream">
-                    Hey, {user.name?.split(" ")[0] || "User"} 
+                    Hey, {user.name?.split(" ")[0] || "User"} 👋
                   </span>
                 </Link>
 
