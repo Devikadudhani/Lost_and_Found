@@ -4,6 +4,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
+
 
 
 
@@ -15,7 +17,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use("/api/items", itemRoutes);
-
+app.use("/api/profile", profileRoutes);
 connectDB();
 
 app.use("/api/auth", authRoutes);
