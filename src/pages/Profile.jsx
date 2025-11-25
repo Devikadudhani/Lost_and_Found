@@ -44,7 +44,7 @@ export default function Profile() {
         </h1>
 
         {/* Top Section */}
-        <div className="flex flex-col sm:flex-row gap-10 items-center">
+        <div className="flex flex-col sm:flex-row gap-20 px-8 items-center">
           {/* Profile Avatar */}
           <div className="flex flex-col items-center">
             <div className="w-44 h-44 rounded-full overflow-hidden shadow">
@@ -58,7 +58,7 @@ export default function Profile() {
           </div>
 
           {/* Details */}
-          <div className="flex-1 grid grid-cols-2 gap-6">
+          <div className="flex flex-col gap-6">
             <div>
               <p className="text-sm text-gray-500">Name</p>
               <p className="font-semibold text-lg">{user.name || "N/A"}</p>
@@ -69,35 +69,35 @@ export default function Profile() {
               <p className="font-semibold text-lg">{user.email}</p>
             </div>
 
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-500">Phone</p>
               <p className="font-semibold text-lg">
                 {user.phone || "Not added"}
               </p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-500">Registered On</p>
               <p className="font-semibold text-lg">
                 {new Date(user.createdAt).toLocaleDateString()}
               </p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-500">Last Login</p>
               <p className="font-semibold text-lg">
                 {user.lastLogin
                   ? new Date(user.lastLogin).toLocaleDateString()
                   : "N/A"}
               </p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <p className="text-sm text-gray-500">Verification Status</p>
               <p className="font-semibold text-lg">
                 {user.isVerified ? "Verified" : "Not Verified"}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
 
