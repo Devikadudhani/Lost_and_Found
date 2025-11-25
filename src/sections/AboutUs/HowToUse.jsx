@@ -13,14 +13,9 @@ function HowToUse() {
         {/* Single Image Below Headings */}
         <img
           src="/flow.png"
-          alt="Key Features Illustration"
-          className="w-full max-w-md object-contain"
+          alt="How it works flow"
+          className="w-full object-contain md:w-[700px] lg:w-[900px]"
         />
-        {/* <img
-          src="/flow.jpg"
-          alt="Key Features Illustration"
-          className="w-full max-w-md object-contain"
-        /> */}
       </div>
     </div>
   );
