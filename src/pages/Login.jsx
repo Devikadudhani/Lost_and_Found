@@ -73,6 +73,18 @@ function Login() {
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            <button
+  type="button"
+  onClick={() => {
+    window.location.href = "http://localhost:5000/api/auth/google";
+  }}
+  className="w-full border border-gray-300 py-2 rounded-lg mb-4 bg-white hover:bg-gray-100"
+>
+  Continue with Google
+</button>
+
+<div className="text-center text-gray-400 mb-3">or</div>
+
             <input
               type="email"
               placeholder="IGDTUW Email"

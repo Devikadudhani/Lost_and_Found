@@ -12,6 +12,9 @@ import ReportFound from "./pages/Found";
 import LostItemsPage from "./pages/LostItemsPage";
 import FoundItemsPage from "./pages/FoundItemsPage";
 import Profile from "./pages/Profile";
+import CompleteProfile from "./pages/CompleteProfile";
+import GoogleSuccess from "./pages/GoogleSuccess";
+import LoginSuccess from "./pages/LoginSuccess";
 
 export default function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -20,6 +23,8 @@ export default function App() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <Routes>
+          <Route path="/login-success" element={<LoginSuccess />} />
+
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
@@ -29,6 +34,9 @@ export default function App() {
           <Route path="/Found" element={<ReportFound />} />
           <Route path="/lost-items" element={<LostItemsPage />} />
           <Route path="/found-items" element={<FoundItemsPage />} />
+          <Route path="/complete-profile" element={<CompleteProfile />} />
+<Route path="/google-success" element={<GoogleSuccess />} />
+
           {/* <Route path="/dashboard"
               element={
                 isAuthenticated ? <Dashboard /> : <Navigate to="/login" />

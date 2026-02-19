@@ -5,6 +5,12 @@ const userSchema = new mongoose.Schema({
   enrollment: String,
   email: { type: String, unique: true },
   verified: { type: Boolean, default: false },
+  googleId: String,
+profileComplete: {
+  type: Boolean,
+  default: false,
+},
+
 });
 
 export default mongoose.model("User", userSchema);

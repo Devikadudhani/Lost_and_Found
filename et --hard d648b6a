@@ -1,0 +1,93 @@
+[33m3eeb69f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add Google login logic
+[33m5525cb2[m login
+[33m04743c5[m Fix googleLogin import
+[33m774d01b[m login
+[33m10b1e8f[m temp
+[33mdde32fc[m again
+[33mdf146a7[m resendd
+[33m11bd938[m resend
+[33m72b4995[m fix route casing
+[33mc3c76d2[m fix vercel routing
+[33md648b6a[m fix vercel routing
+[33m131b910[m fix react routing on vercel
+[33m9fc493e[m trigger redeploy
+[33m5775995[m[33m ([m[1;31mupstream/main[m[33m, [m[1;31morigin/feature/lost-found-listing[m[33m, [m[1;32mfeature/lost-found-listing[m[33m)[m Profile
+[33m4231b3b[m Merge pull request #16 from Devikadudhani/feature/lost-found-listing
+[33m94d8282[m Profile integration
+[33m00d6abf[m Merge pull request #15 from diyakotru/main
+[33m34e06ce[m updated icon
+[33m0ef7f35[m Merge pull request #14 from diyakotru/main
+[33m12b010e[m updated ui
+[33mb0ecfdb[m flowchart
+[33m3da9ad7[m Merge pull request #13 from diyakotru/main
+[33mc63fc01[m Updated frontend icon
+[33mee1ff62[m router
+[33m0071301[m profile
+[33me669bd7[m flow
+[33m18c64b0[m profile pg
+[33m651659c[m Username corrected
+[33m57f7f76[m Updated user access
+[33m1346bba[m[33m ([m[1;32mbackup-main-before-undo[m[33m)[m Merge pull request #12 from Devikadudhani/feature/lost-found-listing
+[33m3d18f25[m User email
+[33m91ef408[m Member's image changed
+[33md69c123[m Members image changed
+[33m8176092[m fixed image upload issue
+[33ma2f13a0[m Merge pull request #11 from Devikadudhani/feature/lost-found-listing
+[33m3b032bb[m Merge branch 'ayushi1527:main' into feature/lost-found-listing
+[33m442d27d[m Added status, edit, delete buttons
+[33m0793b19[m Merge pull request #10 from Devikadudhani/feature/lost-found-listing
+[33m5df42ce[m Lost and Found items listed.
+[33m3bdba9f[m Merge pull request #9 from diyakotru/main
+[33mc2b6bfd[m updated the navigation and signup
+[33m2729050[m SignUp updated
+[33m5255c95[m changes
+[33m2169593[m fixed the reporting issue
+[33m2d8075a[m resolved conflicts
+[33m88dd5bb[m added posting items feature
+[33mc6f82e0[m ui
+[33mab131ca[m Error resolved for navigation
+[33mc4e2da6[m Paths corrected
+[33m945a5dd[m Dashboard created and UI flow improved
+[33md18fb4e[m Merge pull request #8 from diyakotru/main
+[33m90df955[m Added authentication for signup and login n generated tokens
+[33mef555fb[m Merge pull request #7 from diyakotru/main
+[33m284e6a2[m backend updated
+[33md3d42a6[m Merge pull request #6 from diyakotru/main
+[33m18b1db9[m backend updated
+[33mf31d227[m Merge pull request #5 from diyakotru/main
+[33m242f80f[m backend updated
+[33m0404d52[m Merge pull request #4 from diyakotru/main
+[33m99d179e[m backend updated
+[33m11caaaf[m Login page otp handling done
+[33me9ef534[m 2 step sign up form handling
+[33m2d8bc7a[m Backend deleted
+[33m80929ce[m OTP field added
+[33ma3a253f[m Found page uploaded
+[33m0f0d9e6[m Merge pull request #3 from diyakotru/main
+[33m0e39b96[m Merge branch 'main' into main
+[33m5d89fc6[m updated backend
+[33m8111b28[m Mandatory fields included
+[33m2822004[m home page changed
+[33m32ea35a[m Report Lost page uploaded
+[33m8fcec7b[m Merge branch 'ayushi1527:main' into main
+[33m65bfc5c[m about pg
+[33m1e60fcd[m Backend modified
+[33m6f1f4d4[m front end updated
+[33m902fe69[m backend updated
+[33mcdb9a9f[m font
+[33ma1703d7[m about bg white
+[33m9353624[m about
+[33m886f288[m about pg
+[33m65c4a6a[m Error clearedd in sign up page
+[33m2c8002b[m AboutUs added
+[33m3c2f175[m SignUp, About Us uploaded
+[33m448c1fe[m SignUp page updated
+[33m6c3d05f[m Merge branch login-signup
+[33me65fa5f[m login
+[33mce2236b[m Merge pull request #2 from diyakotru/main
+[33m6acc578[m login backend updated
+[33m092f9d9[m Merge pull request #1 from ayushi1527/section/hero
+[33m0bf13d5[m hero section added
+[33m6f0cbcb[m tailwind added navbar footer logo title
+[33mbbbe4ba[m Footer added
+[33m619f9aa[m Project started

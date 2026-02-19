@@ -3,24 +3,31 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE } from "../utils/config"; // adjust path if needed
 
+
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
-
+const [editing, setEditing] = useState(false);
+const [name, setName] = useState("");
+const [enrollment, setEnrollment] = useState("");
   // Load user data (localStorage copy) on mount
-  useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch (e) {
-        setUser(null);
-      }
+ useEffect(() => {
+  const stored = localStorage.getItem("user");
+  if (stored) {
+    try {
+      const u = JSON.parse(stored);
+      setUser(u);
+      setName(u.name || "");
+      setEnrollment(u.enrollment || "");
+    } catch (e) {
+      setUser(null);
     }
-  }, []);
+  }
+}, []);
+
 
   // Fetch profile counts & previews from backend (/api/profile)
   useEffect(() => {
@@ -64,6 +71,33 @@ export default function Profile() {
     loadProfileStats();
     return () => { mounted = false; };
   }, []);
+const handleUpdateProfile = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${API_BASE}/api/profile/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, enrollment }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      setEditing(false);
+      alert("Profile updated!");
+    } else {
+      alert(data.message || "Update failed");
+    }
+  } catch (err) {
+    alert("Error updating profile");
+  }
+};
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -110,17 +144,55 @@ export default function Profile() {
           </div>
 
           {/* Details */}
-          <div className="flex flex-col gap-6">
-            <div>
-              <p className="text-sm text-gray-500">Name</p>
-              <p className="font-semibold text-lg">{user.name || "N/A"}</p>
-            </div>
+        <div className="flex flex-col gap-6">
+  <div>
+    <p className="text-sm text-gray-500">Name</p>
+    {editing ? (
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className="border rounded px-3 py-1"
+      />
+    ) : (
+      <p className="font-semibold text-lg">{user.name || "N/A"}</p>
+    )}
+  </div>
 
-            <div>
-              <p className="text-sm text-gray-500">Email</p>
-              <p className="font-semibold text-lg">{user.email}</p>
-            </div>
-          </div>
+  <div>
+    <p className="text-sm text-gray-500">Enrollment</p>
+    {editing ? (
+      <input
+        value={enrollment}
+        onChange={(e) => setEnrollment(e.target.value)}
+        className="border rounded px-3 py-1"
+      />
+    ) : (
+      <p className="font-semibold text-lg">{user.enrollment || "N/A"}</p>
+    )}
+  </div>
+
+  <div>
+    <p className="text-sm text-gray-500">Email</p>
+    <p className="font-semibold text-lg">{user.email}</p>
+  </div>
+
+  {!editing ? (
+    <button
+      onClick={() => setEditing(true)}
+      className="bg-themeGreen text-white px-4 py-2 rounded-lg"
+    >
+      Edit Profile
+    </button>
+  ) : (
+    <button
+      onClick={handleUpdateProfile}
+      className="bg-green-600 text-white px-4 py-2 rounded-lg"
+    >
+      Save Changes
+    </button>
+  )}
+</div>
+
         </div>
 
         {/* Stats */}
