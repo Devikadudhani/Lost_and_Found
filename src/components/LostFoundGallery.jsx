@@ -33,12 +33,12 @@ function LostFoundGallery() {
   const renderSection = (title, items, color) => (
     <section className="mb-10">
       <h2
-        className={`text-2xl font-bold mb-4 ${
+        className={`text-xl sm:text-2xl font-bold mb-4 ${
           color === "red"
             ? "text-red-600"
             : color === "green"
-            ? "text-green-600"
-            : "text-themeGreen"
+              ? "text-green-600"
+              : "text-themeGreen"
         }`}
       >
         {title}
@@ -47,19 +47,19 @@ function LostFoundGallery() {
       {items.length === 0 ? (
         <p className="text-gray-500">No items available yet.</p>
       ) : (
-        <div className="flex gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-thin scrollbar-thumb-gray-300">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {items.map((item) => (
             <div
               key={item._id}
-              className="min-w-[250px] bg-white rounded-xl shadow hover:shadow-lg transition-transform transform hover:-translate-y-1"
+              className="bg-white rounded-xl shadow hover:shadow-lg transition-transform transform hover:-translate-y-1"
             >
               <img
                 src={item.imageUrl}
                 alt={item.title}
-                className="h-48 w-full object-cover rounded-t-xl"
+                className="h-40 sm:h-48 w-full object-cover rounded-t-xl"
               />
               <div className="p-3 text-center">
-                <h3 className="font-bold text-lg text-gray-800">
+                <h3 className="font-bold text-base sm:text-lg text-gray-800">
                   {item.title}
                 </h3>
                 <p className="text-sm text-gray-600 line-clamp-2">
@@ -77,7 +77,7 @@ function LostFoundGallery() {
   );
 
   return (
-    <div className="px-4 md:px-8 py-10 bg-gray-50 min-h-screen">
+    <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-10 bg-gray-50 min-h-screen">
       {myItems.length > 0 && renderSection("My Uploads", myItems, "green")}
       {renderSection("Lost Items", lostItems, "red")}
       {renderSection("Found Items", foundItems, "green")}
