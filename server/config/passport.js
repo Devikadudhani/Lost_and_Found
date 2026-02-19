@@ -21,7 +21,9 @@ callbackURL: "https://lost-and-found1-9n5a.onrender.com/api/auth/google/callback
         if (!email.endsWith("@igdtuw.ac.in")) {
           return done(null, false);
         }
-
+const adminEmails = [
+  "devika057btcse24@igdtuw.ac.in",
+];
         let user = await User.findOne({ email });
 
         if (!user) {
@@ -30,6 +32,8 @@ callbackURL: "https://lost-and-found1-9n5a.onrender.com/api/auth/google/callback
             email,
             googleId: profile.id,
             profileComplete: false,
+                role: adminEmails.includes(email) ? "admin" : "user",
+
           });
         }
 

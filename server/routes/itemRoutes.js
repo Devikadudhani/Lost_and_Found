@@ -195,9 +195,13 @@ router.patch("/:id", auth, async (req, res) => {
 
     const ownerId = ownerIdString(item);
     const reqUserId = getReqUserId(req);
-    if (!reqUserId || ownerId !== reqUserId) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
+   
+if (
+  !reqUserId ||
+  (ownerId !== reqUserId && req.user.role !== "admin")
+) {
+  return res.status(403).json({ message: "Not authorized" });
+}
 
     const allowed = ["itemName", "description", "location", "pointOfContact", "imageUrl", "reportType", "status"];
     allowed.forEach((k) => {
@@ -225,9 +229,13 @@ router.delete("/:id", auth, async (req, res) => {
 
     const ownerId = ownerIdString(item);
     const reqUserId = getReqUserId(req);
-    if (!reqUserId || ownerId !== reqUserId) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
+   
+if (
+  !reqUserId ||
+  (ownerId !== reqUserId && req.user.role !== "admin")
+) {
+  return res.status(403).json({ message: "Not authorized" });
+}
 
     await Item.deleteOne({ _id: req.params.id });
     res.json({ message: "Item deleted" });
@@ -255,9 +263,12 @@ router.post("/:id/mark", auth, async (req, res) => {
     // owner check (works whether reportedBy is populated or just an ObjectId)
     const ownerId = ownerIdString(item);
     const reqUserId = String(req.user?.id ?? req.user?._id ?? req.user);
-    if (!reqUserId || ownerId !== reqUserId) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
+    if (
+  !reqUserId ||
+  (ownerId !== reqUserId && req.user.role !== "admin")
+) {
+  return res.status(403).json({ message: "Not authorized" });
+}
 
     // Allowed actions depend on the reportType
     let allowedActions = [];
