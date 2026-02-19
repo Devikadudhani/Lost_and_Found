@@ -22,8 +22,8 @@ export default function LoginSuccess() {
       })
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        navigate("/");
-        window.location.reload();
+       window.location.href = "/";
+
       })
       .catch(() => {
         navigate("/login");

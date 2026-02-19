@@ -5,12 +5,22 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+ useEffect(() => {
+  const checkUser = () => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+    } else {
+      setUser(null);
     }
-  }, []);
+  };
+
+  checkUser();
+
+  window.addEventListener("storage", checkUser);
+  return () => window.removeEventListener("storage", checkUser);
+}, []);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
