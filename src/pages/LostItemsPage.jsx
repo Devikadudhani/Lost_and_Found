@@ -3,15 +3,24 @@ import ItemsList from "../components/ItemsList";
 
 export default function LostItemsPage() {
   return (
-    <div>
-      <header className="bg-white shadow py-6">
-        <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-2xl font-semibold">Lost Items</h1>
+    <div className="min-h-screen bg-gray-50">
+      
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">
+            Lost Items
+          </h1>
         </div>
       </header>
-      <main className="py-6">
-        <ItemsList fixedType="lost" />
+
+      {/* Main Content */}
+      <main className="py-6 sm:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ItemsList fixedType="lost" />
+        </div>
       </main>
+
     </div>
   );
 }
