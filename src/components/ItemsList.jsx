@@ -96,13 +96,13 @@ export default function ItemsList({ fixedType }) {
   const totalPages = Math.max(1, Math.ceil((total || 0) / limit));
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="flex items-center justify-between mb-6">
+<div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <h1 className="text-2xl font-semibold">
           {fixedType === "lost" ? "Lost Items" : fixedType === "found" ? "Found Items" : "Items"}
         </h1>
 
-        <div className="flex items-center gap-3">
+<div className="flex flex-wrap gap-2">
           {/* link to your report forms (adjust routes if different) */}
           <a href={fixedType === "lost" ? "/lost" : "/found"} className="px-4 py-2 bg-themeGreen text-white rounded">
             Report {fixedType === "lost" ? "Lost" : "Found"} Item
@@ -157,7 +157,7 @@ onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setPage(1); 
       {loading ? <p>Loading…</p> : null}
       {!loading && items.length === 0 && <p className="text-center py-8">No items found.</p>}
 
-      <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((it) => (
           <li key={it._id} className="p-1">
             <ItemCard item={it} onChange={refresh} />
