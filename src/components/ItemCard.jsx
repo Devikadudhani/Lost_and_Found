@@ -258,7 +258,7 @@ const isAdmin = userRole === "admin";
     <>
       {/* Compact card */}
       <div
-        className="bg-white rounded-xl shadow-md overflow-hidden w-64 cursor-pointer"
+className="bg-white rounded-xl shadow-md overflow-hidden w-full sm:w-64 cursor-pointer"
         onClick={() => {
           setOpen(true);
           // ensure editing is off when opening fresh
@@ -307,9 +307,9 @@ const isAdmin = userRole === "admin";
             }}
           />
 
-          <div className="relative z-10 w-full max-w-3xl bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh]">
+<div className="relative z-10 w-full max-w-3xl bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
             <div className="p-6 overflow-auto">
-              <div className="flex gap-6">
+<div className="flex flex-col lg:flex-row gap-6">
                 <div className="flex-1">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -352,7 +352,7 @@ const isAdmin = userRole === "admin";
 </div>
 
 
-                <div className="w-56 shrink-0">
+<div className="w-full lg:w-56 shrink-0">
                   {item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.itemName} className="w-full h-64 object-contain rounded" />
                   ) : (
@@ -400,7 +400,7 @@ const isAdmin = userRole === "admin";
             <div className="p-4 border-t flex items-center justify-between gap-3">
               <div className="text-xs text-gray-600">Status: {statusBadge(item.status)}</div>
 
-              <div className="flex items-center gap-2">
+<div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => {
                     setOpen(false);
