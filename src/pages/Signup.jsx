@@ -2,7 +2,7 @@ import React from "react";
 
 function Signup() {
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = "https://lost-and-found1-9n5a.onrender.com/api/auth/google";
   };
 
   return (

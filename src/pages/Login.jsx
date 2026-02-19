@@ -76,7 +76,7 @@ function Login() {
             <button
   type="button"
   onClick={() => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = "https://lost-and-found1-9n5a.onrender.com/api/auth/google";
   }}
   className="w-full border border-gray-300 py-2 rounded-lg mb-4 bg-white hover:bg-gray-100"
 >
