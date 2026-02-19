@@ -37,8 +37,8 @@ function LostFoundGallery() {
           color === "red"
             ? "text-red-600"
             : color === "green"
-            ? "text-green-600"
-            : "text-themeGreen"
+              ? "text-green-600"
+              : "text-themeGreen"
         }`}
       >
         {title}

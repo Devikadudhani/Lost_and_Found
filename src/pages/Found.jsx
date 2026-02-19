@@ -10,6 +10,7 @@ function RequiredLabel({ htmlFor, children }) {
     </label>
   );
 }
+
 function ReportFound() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -52,7 +53,6 @@ function ReportFound() {
     setLoading(true);
 
     try {
-      // Validate required fields
       if (
         !formData.itemName ||
         !formData.description ||
@@ -65,7 +65,6 @@ function ReportFound() {
         return;
       }
 
-      // Convert image to base64
       let imageUrl = "";
       if (imageFile) {
         imageUrl = await fileToBase64(imageFile);
@@ -84,7 +83,6 @@ function ReportFound() {
 
       if (response.status === 201) {
         alert("Item reported successfully!");
-        // Reset form
         setFormData({
           itemName: "",
           description: "",
@@ -93,91 +91,97 @@ function ReportFound() {
         });
         setImage(null);
         setImageFile(null);
-        // Redirect to dashboard or items page
         navigate("/");
       }
     } catch (error) {
       console.error("Error reporting item:", error);
       alert(
         error.response?.data?.message ||
-          "Failed to report item. Please try again."
+          "Failed to report item. Please try again.",
       );
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="my-20 flex items-center justify-center">
-      {/* Common Card */}
-      <div className="flex flex-col w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md p-10">
-        {/* Heading */}
+    <div className="my-12 px-4 flex justify-center">
+      <div className="w-full max-w-4xl bg-themeCream rounded-3xl shadow-md p-6 md:p-10">
         <h1 className="text-2xl font-bold text-center text-themeGreen mb-8">
           Report Found Item
         </h1>
 
-        {/* Form + Upload Section */}
-        <div className="flex gap-10">
-          {/* Left: Found Items Info */}
-          <form className="flex-1 space-y-5" onSubmit={handleSubmit}>
-            <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="itemName"
-                className="text-sm font-medium mb-1"
-              >
-                Item Name
-              </RequiredLabel>
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Image Upload Section */}
+          <div className="flex-1 order-1 md:order-2">
+            <RequiredLabel htmlFor="upload">Upload Image</RequiredLabel>
+            <input
+              type="file"
+              id="upload"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 mb-4"
+              required
+            />
+
+            {image && (
+              <div className="flex flex-col items-center">
+                <p className="mb-2 font-medium">Preview:</p>
+                <img
+                  src={image}
+                  alt="preview"
+                  className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-xl shadow"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Form Section */}
+          <form
+            className="flex-1 space-y-4 order-2 md:order-1"
+            onSubmit={handleSubmit}
+          >
+            <div>
+              <RequiredLabel htmlFor="itemName">Item Name</RequiredLabel>
               <input
                 type="text"
                 id="itemName"
                 value={formData.itemName}
                 onChange={handleInputChange}
                 placeholder="What is the name of the item?"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-themeGreen"
                 required
               />
             </div>
 
-            <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="description"
-                className="text-sm font-medium mb-1"
-              >
-                Description
-              </RequiredLabel>
+            <div>
+              <RequiredLabel htmlFor="description">Description</RequiredLabel>
               <input
                 type="text"
                 id="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder="Provide a brief description of the item"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                placeholder="Provide a brief description"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-themeGreen"
                 required
               />
             </div>
 
-            <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="location"
-                className="text-sm font-medium mb-1"
-              >
-                Location
-              </RequiredLabel>
+            <div>
+              <RequiredLabel htmlFor="location">Location</RequiredLabel>
               <input
                 type="text"
                 id="location"
                 value={formData.location}
                 onChange={handleInputChange}
                 placeholder="Where did you find this?"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-themeGreen"
                 required
               />
             </div>
 
-            <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="pointOfContact"
-                className="text-sm font-medium mb-1"
-              >
+            <div>
+              <RequiredLabel htmlFor="pointOfContact">
                 Point of Contact
               </RequiredLabel>
               <input
@@ -185,52 +189,22 @@ function ReportFound() {
                 id="pointOfContact"
                 value={formData.pointOfContact}
                 onChange={handleInputChange}
-                placeholder="To whom should owner contact?"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                placeholder="Whom should the owner contact?"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-themeGreen"
                 required
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center pt-4">
               <button
                 type="submit"
                 disabled={loading}
-                className="px-8 bg-themeGreen text-themeCream font-semibold py-3 rounded-lg shadow-md hover:bg-green-700 disabled:opacity-50"
+                className="w-full md:w-auto px-10 py-3 bg-themeGreen text-themeCream font-semibold rounded-lg shadow hover:bg-green-700 transition disabled:opacity-50"
               >
                 {loading ? "Reporting..." : "Report"}
               </button>
             </div>
           </form>
-
-          {/* Right: Upload Image */}
-          <div className="flex-1">
-            <RequiredLabel
-              htmlFor="upload"
-              className="text-sm font-medium mb-1"
-            >
-              Upload the image
-            </RequiredLabel>
-            <input
-              type="file"
-              id="upload"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mb-4 w-full rounded-lg border border-gray-300 px-3 py-2"
-              required
-            />
-
-            {image && (
-              <div>
-                <h3 className="mb-2">Preview:</h3>
-                <img
-                  src={image}
-                  alt="preview"
-                  className="w-64 h-64 object-cover rounded-lg shadow"
-                />
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

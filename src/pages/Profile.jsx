@@ -1,8 +1,7 @@
 // src/pages/Profile.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_BASE } from "../utils/config"; // adjust path if needed
-
+import { API_BASE } from "../utils/config";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -10,26 +9,24 @@ export default function Profile() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
-const [editing, setEditing] = useState(false);
-const [name, setName] = useState("");
-const [enrollment, setEnrollment] = useState("");
-  // Load user data (localStorage copy) on mount
- useEffect(() => {
-  const stored = localStorage.getItem("user");
-  if (stored) {
-    try {
-      const u = JSON.parse(stored);
-      setUser(u);
-      setName(u.name || "");
-      setEnrollment(u.enrollment || "");
-    } catch (e) {
-      setUser(null);
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState("");
+  const [enrollment, setEnrollment] = useState("");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setUser(u);
+        setName(u.name || "");
+        setEnrollment(u.enrollment || "");
+      } catch (e) {
+        setUser(null);
+      }
     }
-  }
-}, []);
+  }, []);
 
-
-  // Fetch profile counts & previews from backend (/api/profile)
   useEffect(() => {
     let mounted = true;
     async function loadProfileStats() {
@@ -41,7 +38,6 @@ const [enrollment, setEnrollment] = useState("");
         const res = await fetch(`${API_BASE}/api/profile`, {
           method: "GET",
           headers,
-          // if you use cookie-based auth, include credentials; token will be used otherwise
           credentials: token ? undefined : "include",
         });
 
@@ -71,33 +67,34 @@ const [enrollment, setEnrollment] = useState("");
     loadProfileStats();
     return () => { mounted = false; };
   }, []);
-const handleUpdateProfile = async () => {
-  try {
-    const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API_BASE}/api/profile/update`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ name, enrollment }),
-    });
+  const handleUpdateProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    const data = await res.json();
+      const res = await fetch(`${API_BASE}/api/profile/update`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name, enrollment }),
+      });
 
-    if (res.ok) {
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
-      setEditing(false);
-      alert("Profile updated!");
-    } else {
-      alert(data.message || "Update failed");
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        setEditing(false);
+        alert("Profile updated!");
+      } else {
+        alert(data.message || "Update failed");
+      }
+    } catch (err) {
+      alert("Error updating profile");
     }
-  } catch (err) {
-    alert("Error updating profile");
-  }
-};
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -114,7 +111,6 @@ const handleUpdateProfile = async () => {
     );
   }
 
-  // use the API-provided stats when available, otherwise fall back to user fields (if any)
   const totalLost = stats?.lostCount ?? user.totalLost ?? 0;
   const totalFound = stats?.foundCount ?? user.totalFound ?? 0;
   const totalReturned = stats?.returnedCount ?? user.totalReturned ?? 0;
@@ -122,18 +118,16 @@ const handleUpdateProfile = async () => {
   const foundPreview = stats?.recentFound ?? user.lastFoundItems ?? [];
 
   return (
-    <div className="p-10 bg-themeCream flex justify-center">
-      <div className="w-[900px] bg-white rounded-3xl p-10 shadow-lg space-y-10">
-        {/* Header */}
-        <h1 className="text-3xl font-bold text-themeGreen text-center">
+    <div className="p-4 sm:p-8 bg-themeCream flex justify-center">
+      <div className="w-full max-w-5xl bg-white rounded-3xl p-4 sm:p-10 shadow-lg space-y-10">
+        <h1 className="text-2xl sm:text-3xl font-bold text-themeGreen text-center">
           Your Profile
         </h1>
 
         {/* Top Section */}
-        <div className="flex flex-col sm:flex-row gap-20 px-8 items-center">
-          {/* Profile Avatar */}
+        <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 items-center">
           <div className="flex flex-col items-center">
-            <div className="w-44 h-44 rounded-full overflow-hidden shadow">
+            <div className="w-32 h-32 sm:w-44 sm:h-44 rounded-full overflow-hidden shadow">
               <img
                 src="/profile.jpg"
                 alt="User"
@@ -143,81 +137,78 @@ const handleUpdateProfile = async () => {
             <p className="mt-3 text-sm text-gray-500">Default Avatar</p>
           </div>
 
-          {/* Details */}
-        <div className="flex flex-col gap-6">
-  <div>
-    <p className="text-sm text-gray-500">Name</p>
-    {editing ? (
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="border rounded px-3 py-1"
-      />
-    ) : (
-      <p className="font-semibold text-lg">{user.name || "N/A"}</p>
-    )}
-  </div>
+          <div className="flex flex-col gap-4 w-full sm:w-auto">
+            <div>
+              <p className="text-sm text-gray-500">Name</p>
+              {editing ? (
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="border rounded px-3 py-1 w-full"
+                />
+              ) : (
+                <p className="font-semibold text-base sm:text-lg">{user.name || "N/A"}</p>
+              )}
+            </div>
 
-  <div>
-    <p className="text-sm text-gray-500">Enrollment</p>
-    {editing ? (
-      <input
-        value={enrollment}
-        onChange={(e) => setEnrollment(e.target.value)}
-        className="border rounded px-3 py-1"
-      />
-    ) : (
-      <p className="font-semibold text-lg">{user.enrollment || "N/A"}</p>
-    )}
-  </div>
+            <div>
+              <p className="text-sm text-gray-500">Enrollment</p>
+              {editing ? (
+                <input
+                  value={enrollment}
+                  onChange={(e) => setEnrollment(e.target.value)}
+                  className="border rounded px-3 py-1 w-full"
+                />
+              ) : (
+                <p className="font-semibold text-base sm:text-lg">{user.enrollment || "N/A"}</p>
+              )}
+            </div>
 
-  <div>
-    <p className="text-sm text-gray-500">Email</p>
-    <p className="font-semibold text-lg">{user.email}</p>
-  </div>
+            <div>
+              <p className="text-sm text-gray-500">Email</p>
+              <p className="font-semibold text-base sm:text-lg break-all">{user.email}</p>
+            </div>
 
-  {!editing ? (
-    <button
-      onClick={() => setEditing(true)}
-      className="bg-themeGreen text-white px-4 py-2 rounded-lg"
-    >
-      Edit Profile
-    </button>
-  ) : (
-    <button
-      onClick={handleUpdateProfile}
-      className="bg-green-600 text-white px-4 py-2 rounded-lg"
-    >
-      Save Changes
-    </button>
-  )}
-</div>
-
+            {!editing ? (
+              <button
+                onClick={() => setEditing(true)}
+                className="bg-themeGreen text-white px-4 py-2 rounded-lg w-full sm:w-fit"
+              >
+                Edit Profile
+              </button>
+            ) : (
+              <button
+                onClick={handleUpdateProfile}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg w-full sm:w-fit"
+              >
+                Save Changes
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 text-center">
-          <div className="bg-themeCream p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold">{totalLost}</p>
-            <p className="mt-2 text-gray-600">Lost Items</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-center">
+          <div className="bg-themeCream p-4 sm:p-6 rounded-xl shadow">
+            <p className="text-2xl sm:text-3xl font-bold">{totalLost}</p>
+            <p className="mt-1 sm:mt-2 text-gray-600">Lost Items</p>
           </div>
 
-          <div className="bg-themeCream p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold">{totalFound}</p>
-            <p className="mt-2 text-gray-600">Found Items</p>
+          <div className="bg-themeCream p-4 sm:p-6 rounded-xl shadow">
+            <p className="text-2xl sm:text-3xl font-bold">{totalFound}</p>
+            <p className="mt-1 sm:mt-2 text-gray-600">Found Items</p>
           </div>
 
-          <div className="bg-themeCream p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold">{totalReturned}</p>
-            <p className="mt-2 text-gray-600">Returned</p>
+          <div className="bg-themeCream p-4 sm:p-6 rounded-xl shadow">
+            <p className="text-2xl sm:text-3xl font-bold">{totalReturned}</p>
+            <p className="mt-1 sm:mt-2 text-gray-600">Returned</p>
           </div>
         </div>
 
-        {/* QUICK PREVIEW SECTION */}
-        <div className="space-y-10">
-          {/* Lost Items Preview */}
+        {/* Previews */}
+        <div className="space-y-8">
           <div>
-            <h2 className="text-xl font-semibold mb-3">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3">
               Recently Reported Lost Items
             </h2>
 
@@ -233,10 +224,12 @@ const handleUpdateProfile = async () => {
                     className="bg-gray-100 p-3 rounded-lg shadow text-sm flex justify-between items-center"
                   >
                     <div>
-                      <div className="font-medium">{item.itemName || item.title || "Untitled"}</div>
+                      <div className="font-medium">{item.itemName || "Untitled"}</div>
                       <div className="text-xs text-gray-500">{item.location || ""}</div>
                     </div>
-                    <div className="text-xs text-gray-500">{(item.status || "unknown").toUpperCase()}</div>
+                    <div className="text-xs text-gray-500">
+                      {(item.status || "unknown").toUpperCase()}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -245,9 +238,10 @@ const handleUpdateProfile = async () => {
             )}
           </div>
 
-          {/* Found Items Preview */}
           <div>
-            <h2 className="text-xl font-semibold mb-3">Recently Found Items</h2>
+            <h2 className="text-lg sm:text-xl font-semibold mb-3">
+              Recently Found Items
+            </h2>
 
             {loading ? (
               <div className="text-gray-600">Loading...</div>
@@ -261,10 +255,12 @@ const handleUpdateProfile = async () => {
                     className="bg-gray-100 p-3 rounded-lg shadow text-sm flex justify-between items-center"
                   >
                     <div>
-                      <div className="font-medium">{item.itemName || item.title || "Untitled"}</div>
+                      <div className="font-medium">{item.itemName || "Untitled"}</div>
                       <div className="text-xs text-gray-500">{item.location || ""}</div>
                     </div>
-                    <div className="text-xs text-gray-500">{(item.status || "unknown").toUpperCase()}</div>
+                    <div className="text-xs text-gray-500">
+                      {(item.status || "unknown").toUpperCase()}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -275,24 +271,24 @@ const handleUpdateProfile = async () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-center flex-wrap gap-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             onClick={() => navigate("/lost-items")}
-            className="px-6 py-2 bg-themeGreen text-white font-semibold rounded-lg shadow-md hover:bg-green-700"
+            className="px-6 py-2 bg-themeGreen text-white font-semibold rounded-lg shadow-md hover:bg-green-700 w-full sm:w-auto"
           >
             View Lost Items
           </button>
 
           <button
             onClick={() => navigate("/found-items")}
-            className="px-6 py-2 bg-themeGreen text-white font-semibold rounded-lg shadow-md hover:bg-green-700"
+            className="px-6 py-2 bg-themeGreen text-white font-semibold rounded-lg shadow-md hover:bg-green-700 w-full sm:w-auto"
           >
             View Found Items
           </button>
 
           <button
             onClick={handleLogout}
-            className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600"
+            className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 w-full sm:w-auto"
           >
             Logout
           </button>

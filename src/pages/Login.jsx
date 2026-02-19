@@ -6,12 +6,12 @@ function Login() {
   const navigate = useNavigate();
 
   return (
-    <div className="my-20 flex items-center justify-center">
-      <div className="flex w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
+    <div className="my-10 sm:my-20 flex items-center justify-center px-4">
+      <div className="flex flex-col md:flex-row w-full max-w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md">
         
         {/* Left Section */}
-        <div className="flex-1 p-10 flex flex-col justify-center min-h-full">
-          <h1 className="text-2xl font-bold text-center text-themeGreen mb-6">
+        <div className="flex-1 p-6 sm:p-10 flex flex-col justify-center">
+          <h1 className="text-xl sm:text-2xl font-bold text-center text-themeGreen mb-6">
             Login
           </h1>
 
@@ -30,7 +30,6 @@ function Login() {
             {error && <div className="text-red-500 text-sm">{error}</div>}
           </div>
 
-          {/* Keep this */}
           <p className="text-sm text-center mt-5">
             Don’t have an account?{" "}
             <a
@@ -43,11 +42,11 @@ function Login() {
         </div>
 
         {/* Right Logo */}
-        <div className="flex-1 flex items-center justify-center p-10">
+        <div className="flex-1 flex items-center justify-center p-6 sm:p-10">
           <img
             src="/logoWithname.png"
             alt="Logo"
-            className="max-w-[250px] object-contain"
+            className="max-w-[180px] sm:max-w-[250px] object-contain"
           />
         </div>
 

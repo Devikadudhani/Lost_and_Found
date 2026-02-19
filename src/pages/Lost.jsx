@@ -111,8 +111,34 @@ function ReportLost() {
         </h1>
 
         <div className="flex flex-col md:flex-row gap-8">
+          {/* Image Upload Section */}
+          <div className="flex-1 order-1 md:order-2">
+            <label htmlFor="upload" className="text-sm font-medium mb-1 block">
+              Upload the image
+            </label>
+            <input
+              type="file"
+              id="upload"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mb-4 w-full rounded-lg border border-gray-300 px-3 py-2"
+            />
+
+            {image && (
+              <div className="flex flex-col items-center md:items-start">
+                <h3 className="mb-2">Preview:</h3>
+                <img
+                  src={image}
+                  alt="preview"
+                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover rounded-lg shadow"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Form Section */}
           <form
-            className="flex-1 space-y-4 sm:space-y-5"
+            className="flex-1 space-y-4 sm:space-y-5 order-2 md:order-1"
             onSubmit={handleSubmit}
           >
             <div className="flex flex-col">
@@ -179,30 +205,6 @@ function ReportLost() {
               </button>
             </div>
           </form>
-
-          <div className="flex-1">
-            <label htmlFor="upload" className="text-sm font-medium mb-1 block">
-              Upload the image
-            </label>
-            <input
-              type="file"
-              id="upload"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="mb-4 w-full rounded-lg border border-gray-300 px-3 py-2"
-            />
-
-            {image && (
-              <div className="flex flex-col items-center md:items-start">
-                <h3 className="mb-2">Preview:</h3>
-                <img
-                  src={image}
-                  alt="preview"
-                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover rounded-lg shadow"
-                />
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>
