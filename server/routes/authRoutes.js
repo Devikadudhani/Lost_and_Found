@@ -46,13 +46,13 @@ router.get(
     // If profile incomplete → go to form
     if (!user.profileComplete) {
       return res.redirect(
-        `lost-and-found-nu-rouge.vercel.app/complete-profile?token=${token}`
+        `https://lost-and-found-nu-rouge.vercel.app/complete-profile?token=${token}`
       );
     }
 
     // If profile already complete → login success
     res.redirect(
-      `lost-and-found-nu-rouge.vercel.app/login-success?token=${token}`
+      `https://lost-and-found-nu-rouge.vercel.app/login-success?token=${token}`
     );
   }
 );
