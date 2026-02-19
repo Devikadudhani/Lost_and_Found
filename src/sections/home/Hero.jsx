@@ -12,53 +12,51 @@ function Hero() {
     }
   }, []);
   return (
-    <section className="flex justify-center px-4 my-8 animate-fadeIn">
-      <div className="flex flex-col items-center gap-8 w-full max-w-[1000px]">
-        <div className="relative w-full ">
-          {/* Image */}
+    <section className="flex justify-center px-4 my-6 sm:my-8 animate-fadeIn">
+      <div className="flex flex-col items-center gap-8 w-full max-w-[1100px]">
+        <div className="relative w-full overflow-hidden rounded-xl shadow-md">
           <img
             src="/image.png"
             alt="IGDTUW"
-            className="w-full h-auto object-contain rounded-md shadow-md"
+            className="w-full h-[320px] sm:h-[320px] md:h-[420px] object-cover"
           />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-between py-8  text-center px-4 sm:px-8">
-            <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-themeGreen">
+          <div className="absolute inset-0 flex flex-col items-center justify-between py-6 sm:py-8 text-center px-4 sm:px-10 bg-black/10">
+            <div className="mt-2">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2 text-themeGreen">
                 Find Your Lost Items
               </h1>
-              <p className="text-sm sm:text-base md:text-lg max-w-2xl text-themeGreen">
+              <p className="text-xs sm:text-base md:text-lg max-w-xl sm:max-w-2xl text-themeGreen leading-relaxed">
                 Search or report lost items on campus and get them back where
                 they belong.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               {user ? (
                 <Link to="/Lost">
-                  <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+                  <button className="px-5 sm:px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream text-sm sm:text-base">
                     Report Lost Item
                   </button>
                 </Link>
               ) : (
                 <button
                   onClick={() => alert("Login to report a lost item.")}
-                  className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream"
+                  className="px-5 sm:px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream text-sm sm:text-base"
                 >
                   Report Lost Item
                 </button>
               )}
               {user ? (
                 <Link to="/Found">
-                  <button className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream">
+                  <button className="px-5 sm:px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream text-sm sm:text-base">
                     Report Found Item
                   </button>
                 </Link>
               ) : (
                 <button
                   onClick={() => alert("Login to report a found item.")}
-                  className="px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream"
+                  className="px-5 sm:px-6 py-2 rounded-md text-themeGreen font-semibold bg-themeCream text-sm sm:text-base"
                 >
                   Report Found Item
                 </button>

@@ -53,7 +53,6 @@ function ReportLost() {
     setLoading(true);
 
     try {
-      // Validate required fields
       if (
         !formData.itemName ||
         !formData.description ||
@@ -65,7 +64,6 @@ function ReportLost() {
         return;
       }
 
-      // Convert image to base64 if present
       let imageUrl = "";
       if (imageFile) {
         imageUrl = await fileToBase64(imageFile);
@@ -84,7 +82,6 @@ function ReportLost() {
 
       if (response.status === 201) {
         alert("Item reported successfully!");
-        // Reset form
         setFormData({
           itemName: "",
           description: "",
@@ -93,39 +90,33 @@ function ReportLost() {
         });
         setImage(null);
         setImageFile(null);
-        // Redirect to dashboard or items page
         navigate("/");
       }
     } catch (error) {
       console.error("Error reporting item:", error);
       alert(
         error.response?.data?.message ||
-          "Failed to report item. Please try again."
+          "Failed to report item. Please try again.",
       );
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="my-20 flex items-center justify-center">
-      {/* Common Card */}
-      <div className="flex flex-col w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md p-10">
-        {/* Heading */}
-        <h1 className="text-2xl font-bold text-center text-themeGreen mb-8">
+    <div className="my-10 px-4 flex items-center justify-center">
+      <div className="flex flex-col w-full max-w-[900px] bg-themeCream rounded-3xl overflow-hidden shadow-md p-6 sm:p-10">
+        <h1 className="text-xl sm:text-2xl font-bold text-center text-themeGreen mb-6 sm:mb-8">
           Report Lost Item
         </h1>
 
-        {/* Form + Upload Section */}
-        <div className="flex gap-10">
-          {/* Left: Lost Items Info */}
-          <form className="flex-1 space-y-5" onSubmit={handleSubmit}>
+        <div className="flex flex-col md:flex-row gap-8">
+          <form
+            className="flex-1 space-y-4 sm:space-y-5"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="itemName"
-                className="text-sm font-medium mb-1"
-              >
-                Item Name
-              </RequiredLabel>
+              <RequiredLabel htmlFor="itemName">Item Name</RequiredLabel>
               <input
                 type="text"
                 id="itemName"
@@ -138,12 +129,7 @@ function ReportLost() {
             </div>
 
             <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="description"
-                className="text-sm font-medium mb-1"
-              >
-                Description
-              </RequiredLabel>
+              <RequiredLabel htmlFor="description">Description</RequiredLabel>
               <input
                 type="text"
                 id="description"
@@ -156,28 +142,20 @@ function ReportLost() {
             </div>
 
             <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="location"
-                className="text-sm font-medium mb-1"
-              >
-                Location
-              </RequiredLabel>
+              <RequiredLabel htmlFor="location">Location</RequiredLabel>
               <input
                 type="text"
                 id="location"
                 value={formData.location}
                 onChange={handleInputChange}
-                placeholder="Where you might lose it??"
+                placeholder="Where you might lose it?"
                 className="w-full rounded-lg border border-gray-300 px-3 py-2"
                 required
               />
             </div>
 
             <div className="flex flex-col">
-              <RequiredLabel
-                htmlFor="pointOfContact"
-                className="text-sm font-medium mb-1"
-              >
+              <RequiredLabel htmlFor="pointOfContact">
                 Point of Contact
               </RequiredLabel>
               <input
@@ -191,8 +169,7 @@ function ReportLost() {
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center mt-6 sm:mt-10">
               <button
                 type="submit"
                 disabled={loading}
@@ -203,7 +180,6 @@ function ReportLost() {
             </div>
           </form>
 
-          {/* Right: Upload Image */}
           <div className="flex-1">
             <label htmlFor="upload" className="text-sm font-medium mb-1 block">
               Upload the image
@@ -217,12 +193,12 @@ function ReportLost() {
             />
 
             {image && (
-              <div>
+              <div className="flex flex-col items-center md:items-start">
                 <h3 className="mb-2">Preview:</h3>
                 <img
                   src={image}
                   alt="preview"
-                  className="w-64 h-64 object-cover rounded-lg shadow"
+                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-cover rounded-lg shadow"
                 />
               </div>
             )}
