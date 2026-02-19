@@ -16,6 +16,7 @@ import CompleteProfile from "./pages/CompleteProfile";
 import GoogleSuccess from "./pages/GoogleSuccess";
 import LoginSuccess from "./pages/LoginSuccess";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 export default function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -37,13 +38,16 @@ export default function App() {
           <Route path="/found-items" element={<FoundItemsPage />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
 <Route path="/google-success" element={<GoogleSuccess />} />
- <Analytics />
+
           {/* <Route path="/dashboard"
               element={
                 isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
               } /> */}
         </Routes>
         <Footer />
+         <Analytics />
+ <SpeedInsights />
+
       </div>
     </BrowserRouter>
   );
