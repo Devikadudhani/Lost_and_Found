@@ -11,11 +11,11 @@ dotenv.config();
 const app = express();
 app.use(passport.initialize());
 
-app.use(
-    cors({
-         origin:[ "http://localhost:5173",
-         "lost-and-found-nu-rouge.vercel.app"],
-         credentials: true }));
+app.use(cors({
+  origin: "https://lost-and-found-nu-rouge.vercel.app",
+  credentials: true,
+}));
+
 // Increase body parser limits to accept base64 image payloads from frontend
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
