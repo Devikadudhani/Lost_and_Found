@@ -32,7 +32,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: "https://lost-and-found-nu-rouge.vercel.app/login",
   }),
   async (req, res) => {
     const user = req.user;
