@@ -10,11 +10,16 @@ const location = useLocation();
 useEffect(() => {
   const params = new URLSearchParams(location.search);
   const errorParam = params.get("error");
-
+{error && (
+  <div className="bg-red-100 border border-red-300 text-red-700 p-3 rounded-lg text-center text-sm mb-4">
+    🚫 Please use your official IGDTUW email address to login.
+  </div>
+)}
   if (errorParam === "unauthorized") {
-    setError("Only IGDTUW email accounts are allowed to login.");
+  alert("Please use your official IGDTUW email to login.");
+
     window.history.replaceState({}, document.title, "/login");
-    
+
   }
 
 }, [location]);
