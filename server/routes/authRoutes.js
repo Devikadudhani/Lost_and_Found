@@ -33,7 +33,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "https://lost-and-found-nu-rouge.vercel.app/login",
+    failureRedirect: "https://lostandfound-igdtuw.vercel.app/login",
   }),
   async (req, res) => {
     const user = req.user;
@@ -48,13 +48,13 @@ router.get(
     // If profile incomplete → go to form
     if (!user.profileComplete) {
       return res.redirect(
-        `https://lost-and-found-nu-rouge.vercel.app/complete-profile?token=${token}`
+        `https://lostandfound-igdtuw.vercel.app/complete-profile?token=${token}`
       );
     }
 
     // If profile already complete → login success
     res.redirect(
-      `https://lost-and-found-nu-rouge.vercel.app/login-success?token=${token}`
+      `https://lostandfound-igdtuw.vercel.app/login-success?token=${token}`
     );
   }
 );

@@ -12,7 +12,7 @@ const app = express();
 app.use(passport.initialize());
 
 app.use(cors({
-  origin: "https://lost-and-found-nu-rouge.vercel.app",
+  origin: "https://lostandfound-igdtuw.vercel.app",
   credentials: true,
 }));
 
