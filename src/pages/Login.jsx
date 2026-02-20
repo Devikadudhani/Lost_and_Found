@@ -14,6 +14,7 @@ useEffect(() => {
   if (errorParam === "unauthorized") {
     setError("Only IGDTUW email accounts are allowed to login.");
     window.history.replaceState({}, document.title, "/login");
+    
   }
 
 }, [location]);
