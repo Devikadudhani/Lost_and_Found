@@ -31,34 +31,34 @@ router.get(
 // Step 2: Google callback
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
-    session: false,
-    failureRedirect: "https://lostandfound-igdtuw.vercel.app/login",
-  }),
+  passport.authenticate("google", { session: false }),
   async (req, res) => {
+    // If authentication failed
+    if (!req.user) {
+      return res.redirect(
+        "https://lostandfound-igdtuw.vercel.app/login?error=unauthorized"
+      );
+    }
+
     const user = req.user;
 
     const token = jwt.sign(
-  { id: user._id, role: user.role },
-
+      { id: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // If profile incomplete → go to form
     if (!user.profileComplete) {
       return res.redirect(
         `https://lostandfound-igdtuw.vercel.app/complete-profile?token=${token}`
       );
     }
 
-    // If profile already complete → login success
-    res.redirect(
+    return res.redirect(
       `https://lostandfound-igdtuw.vercel.app/login-success?token=${token}`
     );
   }
 );
-
 // Step 3: Complete profile
 router.post("/complete-profile", auth, async (req, res) => {
   try {
