@@ -62,7 +62,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-themeCream/30">
         <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm opacity-80">
-          <p>© 2025 IGDTUW Lost & Found. All rights reserved.</p>
+          <p></p>
         </div>
       </div>
 
