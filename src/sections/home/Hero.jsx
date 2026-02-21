@@ -18,7 +18,7 @@ function Hero() {
           <img
             src="/image.jpg"
             alt="IGDTUW"
-            className="w-full h-[320px] sm:h-[320px] md:h-[500px] object-cover"
+            className="w-full h-[320px] sm:h-[320px] md:h-[450px] object-cover"
           />
 
           <div className="absolute inset-0 flex flex-col items-center justify-between py-6 sm:py-8 text-center px-4 sm:px-10 bg-black/10">
