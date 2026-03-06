@@ -31,14 +31,7 @@ function ReportFound() {
     }
   };
 
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -65,21 +58,23 @@ function ReportFound() {
         return;
       }
 
-      let imageUrl = "";
-      if (imageFile) {
-        imageUrl = await fileToBase64(imageFile);
-      }
+     const form = new FormData();
 
-      const payload = {
-        itemName: formData.itemName,
-        description: formData.description,
-        location: formData.location,
-        pointOfContact: formData.pointOfContact,
-        imageUrl: imageUrl,
-        reportType: "found",
-      };
+form.append("itemName", formData.itemName);
+form.append("description", formData.description);
+form.append("location", formData.location);
+form.append("pointOfContact", formData.pointOfContact);
+form.append("reportType", "found");
 
-      const response = await api.post("/items/report", payload);
+if (imageFile) {
+  form.append("image", imageFile);
+}
+
+const response = await api.post("/items/report", form, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
 
       if (response.status === 201) {
         alert("Item reported successfully!");

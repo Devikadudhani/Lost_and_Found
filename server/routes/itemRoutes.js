@@ -89,8 +89,9 @@ router.get("/", async (req, res) => {
  * POST /api/items/report
  * Protected - create a lost/found report
  */
-router.post("/report", auth, async (req, res) => {
-  try {
+import upload from "../middleware/upload.js";
+
+router.post("/report", auth, upload.single("image"), async (req, res) => {  try {
     const { itemName, description, location, pointOfContact, imageUrl, reportType } = req.body;
     if (!itemName || !description || !location || !pointOfContact || !reportType) {
       return res.status(400).json({ message: "Required fields missing" });
@@ -116,7 +117,7 @@ router.post("/report", auth, async (req, res) => {
       description,
       location,
       pointOfContact,
-      imageUrl: imageUrl || "",
+      imageUrl: req.file?.path || "",
       reportType,
       reportedBy: getReqUserId(req), // store user's id
     });
