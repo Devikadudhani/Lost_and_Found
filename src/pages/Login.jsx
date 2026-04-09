@@ -38,7 +38,7 @@ useEffect(() => {
               type="button"
               onClick={() => {
                 window.location.href =
-                  "https://lost-and-found1-9n5a.onrender.com/api/auth/google";
+                  "https://lostandfound-k7fp.onrender.com/api/auth/google";
               }}
               className="w-full border border-gray-300 py-2 rounded-lg mb-4 bg-white hover:bg-gray-100"
             >

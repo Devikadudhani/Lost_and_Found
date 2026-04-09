@@ -3,7 +3,7 @@ import React from "react";
 function Signup() {
   const handleGoogleSignup = () => {
     window.location.href =
-      "https://lost-and-found1-9n5a.onrender.com/api/auth/google";
+      "https://lostandfound-k7fp.onrender.com/api/auth/google";
   };
 
   return (

@@ -1,5 +1,5 @@
 // src/utils/api.js
-export const API_BASE = import.meta.env.VITE_API_BASE || "https://lost-and-found1-9n5a.onrender.com";
+export const API_BASE = import.meta.env.VITE_API_BASE || "https://lostandfound-k7fp.onrender.com";
 
 export function apiUrl(path) {
   return `${API_BASE}${path}`;

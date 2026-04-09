@@ -19,6 +19,9 @@ app.use(cors({
 // Increase body parser limits to accept base64 image payloads from frontend
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.get("/", (req, res) => {
+  res.status(200).send("Server is running");
+});
 app.use("/api/items", itemRoutes);
 app.use("/api/profile", profileRoutes);
 connectDB();

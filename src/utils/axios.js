@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://lost-and-found1-9n5a.onrender.com/api",
+  baseURL: "https://lostandfound-k7fp.onrender.com/api",
   withCredentials: true,
 });
 
