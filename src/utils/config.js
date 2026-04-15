@@ -1,1 +1,1 @@
-export const API_BASE = "https://lostandfound-k7fp.onrender.com"; // backend URL
+export const API_BASE = import.meta.env.VITE_API_URL;

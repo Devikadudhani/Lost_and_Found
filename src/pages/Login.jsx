@@ -37,8 +37,7 @@ useEffect(() => {
             <button
               type="button"
               onClick={() => {
-                window.location.href =
-                  "https://lostandfound-k7fp.onrender.com/api/auth/google";
+               window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
               }}
               className="w-full border border-gray-300 py-2 rounded-lg mb-4 bg-white hover:bg-gray-100"
             >

@@ -2,8 +2,7 @@ import React from "react";
 
 function Signup() {
   const handleGoogleSignup = () => {
-    window.location.href =
-      "https://lostandfound-k7fp.onrender.com/api/auth/google";
+   window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
   };
 
   return (

@@ -12,8 +12,7 @@ const app = express();
 app.use(passport.initialize());
 
 app.use(cors({
-  origin: "https://lostandfound-igdtuw.vercel.app",
-  credentials: true,
+origin: process.env.FRONTEND_URL,  credentials: true,
 }));
 
 // Increase body parser limits to accept base64 image payloads from frontend

@@ -33,15 +33,11 @@ router.get("/google/callback", (req, res, next) => {
   passport.authenticate("google", { session: false }, (err, user, info) => {
 
     if (err) {
-      return res.redirect(
-        "https://lostandfound-igdtuw.vercel.app/login?error=server"
-      );
+      return res.redirect(`${process.env.FRONTEND_URL}/login?error=server`);
     }
 
     if (!user) {
-      return res.redirect(
-        "https://lostandfound-igdtuw.vercel.app/login?error=unauthorized"
-      );
+      return res.redirect(`${process.env.FRONTEND_URL}/login?error=unauthorized`);
     }
 
     // SUCCESS
@@ -51,9 +47,7 @@ router.get("/google/callback", (req, res, next) => {
       { expiresIn: "7d" }
     );
 
-    return res.redirect(
-      `https://lostandfound-igdtuw.vercel.app/login-success?token=${token}`
-    );
+    return res.redirect(`${process.env.FRONTEND_URL}/login-success?token=${token}`);
 
   })(req, res, next);
 });
