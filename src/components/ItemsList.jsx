@@ -73,10 +73,13 @@ export default function ItemsList({ fixedType }) {
 
       const filtered = statusFilter ? allItems.filter(it => it.status === statusFilter) : allItems;
 
-      setItems(filtered);
-      // Note: total remains the server total (unfiltered). If you want total to reflect filtered list, setTotal(filtered.length)
-      // We'll set total to filtered length so pagination makes sense for the filtered view:
-      setTotal(filtered.length);
+     if (page === 1) {
+  setItems(filtered);
+} else {
+  setItems((prev) => [...prev, ...filtered]);
+}
+
+setTotal(data.total);
     } catch (e) {
       console.error(e);
       setItems([]);
@@ -99,7 +102,7 @@ export default function ItemsList({ fixedType }) {
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <h1 className="text-2xl font-semibold">
-          {fixedType === "lost" ? "Lost Items" : fixedType === "found" ? "Found Items" : "Items"}
+          {fixedType === "lost" ? "  Showing recent items" : fixedType === "found" ? "  Showing recent items" : "Items"}
         </h1>
 
 <div className="flex flex-wrap gap-2">
@@ -115,7 +118,7 @@ export default function ItemsList({ fixedType }) {
           {/* NEW: Status filter buttons (do not change search input) */}
           {fixedType === "lost" && (
             <button
-              onClick={() => { setStatusFilter(prev => (prev === "found" ? "" : "found")); setPage(1); }}
+              onClick={() => { setStatusFilter(prev => (prev === "found" ? "" : "found")); setItems([]);setPage(1); }}
               className={`px-3 py-1 border rounded ${statusFilter === "found" ? "bg-gray-100" : ""}`}
             >
               {statusFilter === "found" ? "Showing: Found" : "Items Found"}
@@ -133,7 +136,7 @@ export default function ItemsList({ fixedType }) {
 {/* Show All (clears status filter and returns to full list) */}
 {fixedType && (
   <button
-onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setPage(1); }}
+onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setItems([]);setPage(1);}}
     className="px-3 py-1 border rounded"
     title={`Show all ${fixedType === "lost" ? "lost" : "found"} items`}
   >
@@ -165,13 +168,16 @@ onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setPage(1); 
         ))}
       </ul>
 
-      {totalPages > 1 && (
-        <div className="flex items-center gap-2 mt-6 justify-center">
-          <button className="border rounded px-3 py-1" disabled={page <= 1} onClick={() => setPage(p => p - 1)}>Prev</button>
-          <div>Page {page} of {totalPages}</div>
-          <button className="border rounded px-3 py-1" disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
-        </div>
-      )}
+     {items.length < total && (
+  <div className="flex justify-center mt-8">
+    <button
+      onClick={() => setPage((p) => p + 1)}
+      className="text-themeGreen font-semibold hover:underline"
+    >
+      Load More
+    </button>
+  </div>
+)}
     </div>
   );
 }
