@@ -6,7 +6,7 @@ import upload from "../middleware/upload.js";
 const router = express.Router();
 
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: process.env.GOOGLE_VISION_KEY_PATH || "./google-vision-key.json",
+  keyFilename: process.env.GOOGLE_VISION_KEY_PATH || "./vision-key.json",
 });
 router.post("/", upload.single("image"), async (req, res) => {
   try {
