@@ -6,12 +6,10 @@ import authRoutes from "./routes/authRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import passport from "./config/passport.js";
-import imageSearch from "./routes/imageSearch.js";
 
 dotenv.config();
 const app = express();
 app.use(passport.initialize());
-app.use("/api/image-search", imageSearch);
 
 app.use(cors({
 origin: process.env.FRONTEND_URL,  credentials: true,
