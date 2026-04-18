@@ -90,7 +90,7 @@ if (searchText) {
       "location",
       "pointOfContact"
     ],
-    threshold: 0.50,
+    threshold: 0.38,
     distance: 100,
     ignoreLocation: true,
     minMatchCharLength: 2
