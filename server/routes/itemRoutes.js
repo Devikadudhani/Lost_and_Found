@@ -57,16 +57,30 @@ router.get("/", async (req, res) => {
     const filter = {};
     if (type === "lost" || type === "found") filter.reportType = type;
 
-    if (q && q.trim()) {
-      const safe = q.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const re = new RegExp(safe, "i");
-      filter.$or = [
-        { itemName: re },
-        { description: re },
-        { pointOfContact: re },
-        { location: re },
-      ];
-    }
+   if (q && q.trim()) {
+  const stopWords = [
+    "in", "on", "at", "the", "a", "an",
+    "near", "to", "from", "with", "of",
+    "my", "is", "was", "it"
+  ];
+
+  const words = q
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(word => word && !stopWords.includes(word));
+
+  if (words.length > 0) {
+    filter.$and = words.map(word => ({
+      $or: [
+        { itemName: { $regex: word, $options: "i" } },
+        { description: { $regex: word, $options: "i" } },
+        { location: { $regex: word, $options: "i" } },
+        { pointOfContact: { $regex: word, $options: "i" } }
+      ]
+    }));
+  }
+}
 
     const [total, items] = await Promise.all([
       Item.countDocuments(filter),
@@ -136,12 +150,30 @@ router.get("/mine", auth, async (req, res) => {
     const userId = getReqUserId(req);
     const filter = { reportedBy: userId };
     if (type === "lost" || type === "found") filter.reportType = type;
-    if (q && q.trim()) {
-      const safe = q.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const re = new RegExp(safe, "i");
-      filter.$or = [{ itemName: re }, { description: re }, { location: re }, { pointOfContact: re }];
-    }
+ if (q && q.trim()) {
+  const stopWords = [
+    "in", "on", "at", "the", "a", "an",
+    "near", "to", "from", "with", "of",
+    "my", "is", "was", "it"
+  ];
 
+  const words = q
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(word => word && !stopWords.includes(word));
+
+  if (words.length > 0) {
+    filter.$and = words.map(word => ({
+      $or: [
+        { itemName: { $regex: word, $options: "i" } },
+        { description: { $regex: word, $options: "i" } },
+        { location: { $regex: word, $options: "i" } },
+        { pointOfContact: { $regex: word, $options: "i" } }
+      ]
+    }));
+  }
+}
     const [total, items] = await Promise.all([
       Item.countDocuments(filter),
       Item.find(filter)

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { API_BASE } from "../utils/config";
 import ItemCard from "./ItemCard";
-
+import Fuse from "fuse.js";
 /**
  * Props:
  * - fixedType: optional "lost" or "found" to filter this list
@@ -15,6 +15,7 @@ export default function ItemsList({ fixedType }) {
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [mineOnly, setMineOnly] = useState(false);
+  const searchText = q?.trim();
 
   // NEW: statusFilter - "" means no filtering, otherwise "found" or "handed" etc.
   const [statusFilter, setStatusFilter] = useState("");
@@ -35,10 +36,17 @@ export default function ItemsList({ fixedType }) {
     try {
       const params = new URLSearchParams();
       if (fixedType) params.set("type", fixedType);
-      if (q?.trim()) params.set("q", q.trim());
-      params.set("page", String(page));
-      params.set("limit", String(limit));
+const searchText = q?.trim();
 
+if (!searchText) {
+  params.set("page", String(page));
+} else {
+  params.set("page", "1");
+}if (searchText) {
+  params.set("limit", "1000");
+} else {
+  params.set("limit", String(limit));
+}
       let url = `${API_BASE}/api/items?${params.toString()}`;
       let opts = { credentials: "include" };
 
@@ -72,11 +80,31 @@ export default function ItemsList({ fixedType }) {
       const allItems = (data.items || []).map(it => ({ ...it, status: it.status || "reported" }));
 
       const filtered = statusFilter ? allItems.filter(it => it.status === statusFilter) : allItems;
+let finalItems = filtered;
 
-     if (page === 1) {
-  setItems(filtered);
+// Apply smart typo-tolerant search
+if (searchText) {
+  const fuse = new Fuse(filtered, {
+    keys: [
+      "itemName",
+      "description",
+      "location",
+      "pointOfContact"
+    ],
+    threshold: 0.50,
+    distance: 100,
+    ignoreLocation: true,
+    minMatchCharLength: 2
+  });
+
+  finalItems = fuse.search(searchText).map((result) => result.item);
+}
+
+// Load More logic
+if (page === 1) {
+  setItems(finalItems);
 } else {
-  setItems((prev) => [...prev, ...filtered]);
+  setItems((prev) => [...prev, ...finalItems]);
 }
 
 setTotal(data.total);
@@ -151,8 +179,11 @@ onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setItems([])
       <div className="mb-4">
         <input
           value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={`Search ${fixedType ?? "items"} (item name, description)...`}
+onChange={(e) => {
+  setItems([]);
+  setPage(1);
+  setQ(e.target.value);
+}}          placeholder={`Search ${fixedType ?? "items"} (item name, description)...`}
           className="border rounded px-3 py-2 w-full"
         />
       </div>
@@ -168,8 +199,8 @@ onClick={() => { setStatusFilter(""); setQ(""); setMineOnly(false); setItems([])
         ))}
       </ul>
 
-     {items.length < total && (
-  <div className="flex justify-center mt-8">
+{!searchText && items.length < total && (
+    <div className="flex justify-center mt-8">
     <button
       onClick={() => setPage((p) => p + 1)}
       className="text-themeGreen font-semibold hover:underline"
