@@ -1,5 +1,4 @@
 import express from "express";
-import { signup, verifySignup, login, verifyLogin, verifyOtp } from "../controllers/authController.js";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import auth from "../middleware/auth.js";
@@ -8,12 +7,7 @@ import User from "../models/User.js";
 const router = express.Router();
 
 // OTP routes
-router.post("/send-otp", signup);
-router.post("/signup", signup);
-router.post("/verify-signup", verifySignup);
-router.post("/verify-otp", verifyOtp);
-router.post("/login", login);
-router.post("/verify-login", verifyLogin);
+
 
 //
 // GOOGLE AUTH ROUTES
