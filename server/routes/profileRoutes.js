@@ -8,14 +8,16 @@ const router = express.Router();
 // UPDATE PROFILE
 router.patch("/update", auth, async (req, res) => {
   try {
-    const { name, enrollment } = req.body;
+const { name, enrollment, profilePic } = req.body;
 
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     if (name) user.name = name;
     if (enrollment) user.enrollment = enrollment;
-
+if (profilePic !== undefined) {
+    user.profilePic = profilePic;
+}
     await user.save();
 
     res.json({ message: "Profile updated", user });

@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   verified: { type: Boolean, default: false },
   googleId: String,
-profileComplete: {
+  profileComplete: {
   type: Boolean,
   default: false,
 },
@@ -14,6 +14,10 @@ role: {
   type: String,
   enum: ["user", "admin"],
   default: "user",
+},
+profilePic: {
+  type: String,
+  default: "",
 },
 
 });

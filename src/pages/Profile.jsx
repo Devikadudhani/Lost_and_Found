@@ -12,7 +12,8 @@ export default function Profile() {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("");
   const [enrollment, setEnrollment] = useState("");
-
+const [profilePic, setProfilePic] = useState("");
+const [selectedImage, setSelectedImage] = useState("");
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (stored) {
@@ -20,6 +21,7 @@ export default function Profile() {
         const u = JSON.parse(stored);
         setUser(u);
         setName(u.name || "");
+        setProfilePic(u.profilePic || "");
         setEnrollment(u.enrollment || "");
       } catch (e) {
         setUser(null);
@@ -78,15 +80,20 @@ export default function Profile() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name, enrollment }),
-      });
+body: JSON.stringify({
+    name,
+    enrollment,
+profilePic,
+}),      });
 
       const data = await res.json();
 
       if (res.ok) {
         localStorage.setItem("user", JSON.stringify(data.user));
         setUser(data.user);
+        setProfilePic(data.user.profilePic || "");
         setEditing(false);
+        setSelectedImage("");
         alert("Profile updated!");
       } else {
         alert(data.message || "Update failed");
@@ -126,16 +133,71 @@ export default function Profile() {
 
         {/* Top Section */}
         <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 items-center">
-          <div className="flex flex-col items-center">
-            <div className="w-32 h-32 sm:w-44 sm:h-44 rounded-full overflow-hidden shadow">
-              <img
-                src="/profile.jpg"
+         <div className="flex flex-col items-center">
+
+    <label
+        htmlFor="profile-upload"
+        className={`relative ${editing ? "cursor-pointer group" : ""}`}
+    >
+        <div className="w-32 h-32 sm:w-44 sm:h-44 rounded-full overflow-hidden shadow">
+
+            <img
+                src={profilePic || "/profile.jpg"}
                 alt="User"
                 className="w-full h-full object-cover"
-              />
+            />
+
+        </div>
+
+        {editing && (
+            <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white font-semibold">
+                Change Photo
             </div>
-            <p className="mt-3 text-sm text-gray-500">Default Avatar</p>
-          </div>
+        )}
+    </label>
+
+    <input
+        id="profile-upload"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setProfilePic(reader.result);
+                setSelectedImage(reader.result);
+            };
+
+            reader.readAsDataURL(file);
+        }}
+    />
+
+    {editing && profilePic && (
+        <button
+            type="button"
+            onClick={() => {
+                setProfilePic("");
+                setSelectedImage("");
+            }}
+            className="mt-3 text-red-600 hover:text-red-700 font-medium"
+        >
+            Remove Photo
+        </button>
+    )}
+
+    <p className="mt-3 text-sm text-gray-500">
+        {editing
+            ? "Click photo to change"
+            : profilePic
+            ? "Profile Photo"
+            : "Default Avatar"}
+    </p>
+
+</div>
 
           <div className="flex flex-col gap-4 w-full sm:w-auto">
             <div>
